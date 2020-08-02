@@ -110,3 +110,27 @@
   background-color: rgb(26, 145, 218);
   cursor: pointer;
 }
+@media (max-width: 992px) {
+  #main {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  #main #leftColumn {
+    width: 100vw;
+    height: 50vh;
+  }
+  #main #leftColumn #content {
+    margin-top: 5%;
+  }
+  #main #rightColumn {
+    width: 100vw;
+  }
+  #main #rightColumn #content {
+    margin-top: 5%;
+  }
+  #main #leftColumn img {
+    right: 0;
+    width: 50vh;
+    height: 50vh;
+  }
+}
