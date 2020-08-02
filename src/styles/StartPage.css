@@ -1,0 +1,112 @@
+#startPage {
+  position: relative;
+  max-width: 100% !important;
+  padding: 0px !important;
+  margin: 0px !important;
+}
+#startPage #leftColumn img {
+  position: absolute;
+  height: 90vh;
+  width: 50vw;
+  z-index: -1 !important;
+}
+#main {
+  min-height: 94vh !important;
+  display: flex;
+}
+#footer {
+  min-height: 6vh !important;
+  display: flex;
+  justify-content: space-evenly !important;
+}
+#footer div {
+  padding-top: 5px !important;
+}
+#footer a {
+  text-decoration: none;
+  color: #657786;
+  font-size: 13px;
+  padding: 0px 8px;
+}
+#main #leftColumn {
+  width: 50vw;
+  background-color: #71c9f8;
+  position: relative !important;
+  z-index: 0 !important;
+}
+#main #leftColumn #content {
+  width: 400px;
+  height: 160px;
+  margin: auto;
+  margin-top: 25%;
+  z-index: 10 !important;
+}
+#main #leftColumn #content > div {
+  display: flex;
+}
+#main #leftColumn #content > div p {
+  font-size: 19px;
+  padding: 0px 5px;
+  font-weight: 700;
+  color: #ffffff;
+}
+#main #leftColumn #content .icons {
+  font-size: 30px;
+  color: #ffffff;
+}
+#main #rightColumn img {
+  height: 35px;
+  width: 40px;
+}
+#main #rightColumn {
+  width: 50vw;
+}
+#main #rightColumn > div {
+  box-sizing: border-box;
+  padding: 15px;
+}
+#main #rightColumn #content {
+  width: 450px;
+  margin: auto;
+  margin-top: 15%;
+}
+#main #rightColumn #content > p {
+  font-size: 36px;
+  font-weight: 700;
+}
+#main #rightColumn #content > div {
+  margin-top: 60px !important;
+}
+#main #rightColumn #content > div p {
+  font-size: 18px;
+  font-weight: 700;
+}
+#main #rightColumn #content > div #buttons {
+  display: flex;
+  flex-direction: column;
+}
+#main #rightColumn #content > div #buttons button {
+  height: 45px;
+  margin-bottom: 15px;
+  border: none;
+  border-radius: 25px;
+  font-size: 15px;
+  font-weight: 600;
+}
+#main #rightColumn #content > div #buttons button:first-of-type {
+  color: white;
+  background-color: #1da1f2;
+}
+#main #rightColumn #content > div #buttons button:nth-of-type(2) {
+  color: #53a5e4;
+  background-color: white;
+  border: 2px solid #1da1f2;
+}
+#main #rightColumn #content > div #buttons button:nth-of-type(2):hover {
+  background-color: rgba(29, 161, 242, 0.1);
+  cursor: pointer;
+}
+#main #rightColumn #content > div #buttons button:first-of-type:hover {
+  background-color: rgb(26, 145, 218);
+  cursor: pointer;
+}
