@@ -29,8 +29,7 @@
   color: #657786;
 }
 #login > div #username input {
-  margin-top: 4px;
-  font-size: 24px;
+  font-size: 18px;
   border: none;
   background-color: transparent;
 }

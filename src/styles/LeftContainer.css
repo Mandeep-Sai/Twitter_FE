@@ -1,0 +1,38 @@
+#leftBar {
+  width: 60px;
+}
+#leftBar > #logo {
+  height: 60px;
+  width: 60px;
+  padding: 15px 17px;
+  border-radius: 40px;
+}
+#logo img {
+  width: 30px;
+  height: 25px;
+}
+#leftBar > div {
+  margin-bottom: 5px;
+  height: 60px;
+  width: 60px;
+  border-radius: 40px;
+  padding: 14px 14px;
+}
+#leftBar > div:hover {
+  background-color: rgba(29, 161, 242, 0.1);
+  cursor: pointer;
+}
+#leftBar .active {
+  color: #1da1f2;
+}
+#leftBar div:nth-of-type(10) {
+  background-color: #1da1f2;
+  color: white;
+}
+#leftBar div:nth-of-type(10):hover {
+  background-color: #0093ee;
+}
+#leftBar > div svg {
+  font-size: 32px;
+  margin-left: auto;
+}

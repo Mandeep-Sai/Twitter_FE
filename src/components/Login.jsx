@@ -3,6 +3,9 @@ import { Container } from "react-bootstrap";
 import "../styles/Login.css";
 
 export class Login extends Component {
+  loginHandler = () => {
+    this.props.history.push("/home");
+  };
   render() {
     return (
       <Container id="login">
@@ -20,7 +23,7 @@ export class Login extends Component {
             <p>Password</p>
             <input type="password" />
           </div>
-          <button>Log in</button>
+          <button onClick={this.loginHandler}>Log in</button>
           <div id="bottomContent">
             <a href="/">Forgot password ?</a>
             <a href="/" style={{ margin: "0 5px" }}>

@@ -1,0 +1,77 @@
+#rightBar {
+  width: 28vw;
+  min-height: 80vh;
+}
+#rightBar #search {
+  margin-top: 10px;
+  padding: 10px 15px;
+  width: 100%;
+
+  border-radius: 40px;
+  background-color: #e6ecf0;
+}
+#rightBar #search svg {
+  font-size: 28px;
+  color: #657786;
+}
+#rightBar #search input {
+  border: none;
+  background-color: transparent;
+  width: 90%;
+  height: 30px;
+  padding: 10px;
+  font-size: 16px;
+}
+#rightBar #search input:focus {
+  outline: none;
+}
+#rightBar #trending {
+  margin-top: 20px;
+  padding: 10px 15px;
+  width: 100%;
+
+  border-radius: 20px;
+  background-color: #f5f8fa;
+}
+#rightBar #trending #header {
+  display: flex;
+  justify-content: space-between;
+  height: 40px;
+}
+#rightBar #trending #header svg {
+  font-size: 22px;
+  color: #1da1f2;
+  margin: 10px 5px;
+}
+#rightBar #trending #header p {
+  margin: "0px";
+  font-size: 24px;
+  font-weight: 700;
+}
+#rightBar #trending #trendingHastag p {
+  margin: 0;
+}
+#rightBar #trending #trendingHastag {
+  padding: 10px;
+}
+#rightBar #trending #trendingHastag p {
+  margin-bottom: 3px;
+}
+#rightBar #trending #trendingHastag p:nth-of-type(2) {
+  margin-bottom: 7px;
+  font-size: 16px;
+  font-weight: 700;
+}
+#rightBar #trending #trendingHastag p:first-of-type {
+  font-size: 14px;
+  color: #657786;
+}
+#rightBar #trending #trendingHastag p:nth-of-type(3) {
+  font-size: 14px;
+  color: #657786;
+}
+#rightBar #trending #trendingHastag:hover {
+  background-color: #eaeef1;
+  transition: all 0.4s ease-in-out;
+  cursor: pointer;
+}

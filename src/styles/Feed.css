@@ -1,0 +1,111 @@
+#feed {
+  width: 50vw;
+}
+#createTweet {
+  margin-top: 10px;
+  border: 1px solid #e6ecf0;
+}
+#createTweet > div:first-of-type {
+  padding: 5px 10px 0px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#createTweet > div:first-of-type p {
+  margin: 0px;
+  font-size: 22px;
+  font-weight: 750;
+}
+#createTweet > div:first-of-type svg {
+  font-size: 25px;
+}
+#createTweet #tweetingSection {
+  padding: 10px;
+}
+#createTweet #tweetingSection img {
+  height: 70px;
+  width: 70px;
+  border-radius: 40px;
+  background: transparent;
+  margin-top: -10px;
+}
+#createTweet #tweetingSection input {
+  margin: 0px 10px;
+  border: none;
+  font-size: 24px;
+}
+#createTweet #tweetingSection input:focus {
+  outline: none;
+}
+#createTweet #icons {
+  padding: 10px;
+  margin-left: 12%;
+  display: flex;
+  justify-content: space-between;
+}
+#createTweet #icons svg {
+  font-size: 30px;
+  margin: 0px 10px;
+  color: #1da1f2;
+}
+#createTweet #icons svg:hover {
+  cursor: pointer;
+  color: #0087db;
+}
+#createTweet #icons button {
+  height: 40px;
+  width: 90px;
+  border: none;
+  background-color: #1da1f2;
+  border-radius: 30px;
+  color: white;
+  font-weight: 650;
+}
+.tweet {
+  display: flex;
+  padding: 15px;
+  border: 1px #e6ecf0 solid;
+}
+.tweet > img {
+  width: 70px;
+  height: 70px;
+  border-radius: 40px;
+}
+.tweet .content {
+  margin-left: 10px;
+}
+.tweet .content p {
+  margin: 0px;
+}
+.tweet .content .name > div {
+  display: flex;
+  justify-content: space-between;
+}
+.tweet .content .name {
+  height: 80px;
+}
+.tweet .content > img {
+  border-radius: 20px;
+  height: 300px;
+}
+.tweet .content .icons {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
+  color: #657786;
+}
+.tweet .content .name > div svg {
+  font-size: 24px;
+  color: #657786;
+}
+.tweet .content .icons p:first-of-type:hover {
+  color: #1da1f2;
+  cursor: pointer;
+}
+.tweet .content .icons p:nth-of-type(2):hover {
+  color: rgb(32, 204, 61);
+  cursor: pointer;
+}
+.tweet .content .icons p:nth-of-type(3):hover {
+  color: rgb(182, 55, 55);
+  cursor: pointer;
+}
