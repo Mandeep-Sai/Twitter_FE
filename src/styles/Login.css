@@ -16,24 +16,24 @@
   font-size: 23px;
   font-weight: 700;
 }
-#login > div #username {
+#login > div #user {
   height: 60px;
   margin-top: 20px;
   padding: 5px;
   background-color: #f5f8fa;
   border-bottom: 2px solid #657786;
 }
-#login > div #username p {
+#login > div #user p {
   margin: 0;
   margin-left: 5px;
   color: #657786;
 }
-#login > div #username input {
+#login > div #user input {
   font-size: 18px;
   border: none;
   background-color: transparent;
 }
-#login > div #username input:focus {
+#login > div #user input:focus {
   outline: none !important;
 }
 #login button {

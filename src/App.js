@@ -11,7 +11,7 @@ function App() {
     <Router>
       <Route path="/" exact component={StartPage} />
       <Route path="/login" exact component={Login} />
-      <Route path="/home" exact component={Home} />
+      <Route path="/home/:username" exact component={Home} />
     </Router>
   );
 }

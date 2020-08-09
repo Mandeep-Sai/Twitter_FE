@@ -42,8 +42,11 @@ export default function LeftContainer() {
       <div>
         <RiQuillPenLine />
       </div>
-      <div>
-        <img src="" alt="" />
+      <div id="profile">
+        <img
+          src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
+          alt=""
+        />
       </div>
     </div>
   );

@@ -37,6 +37,7 @@
   display: flex;
   justify-content: space-between;
   height: 40px;
+  padding: 0px 5px;
 }
 #rightBar #trending #header svg {
   font-size: 22px;
@@ -74,4 +75,52 @@
   background-color: #eaeef1;
   transition: all 0.4s ease-in-out;
   cursor: pointer;
+}
+#rightBar #trending #follow > div img {
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+}
+#rightBar #trending #follow p {
+  margin: 0px;
+}
+#rightBar #trending #follow {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+#rightBar #trending #follow > div {
+  display: flex;
+}
+#rightBar #trending #follow > div > div {
+  padding: 0px 10px;
+}
+#rightBar #trending #follow > div > div p:first-of-type {
+  font-size: 18px;
+  font-weight: 600;
+}
+#rightBar #trending #follow > div > div p:nth-of-type(2) {
+  font-size: 16px;
+  color: #8c9aa5;
+}
+#rightBar #trending #follow button {
+  width: 90px;
+  height: 40px;
+  color: #1da1f2;
+  font-weight: 650;
+  background-color: #f5f8fa;
+  border: 2px solid #1da1f2;
+  border-radius: 20px;
+  margin: auto 0px;
+}
+#rightBar #footer > div {
+  padding: 10px;
+}
+#rightBar #footer a {
+  margin: 0px 5px;
+  color: #8c9aa5;
+}
+#rightBar #footer a:hover {
+  text-decoration: none;
+  color: #657786;
 }

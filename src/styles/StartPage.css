@@ -14,15 +14,15 @@
   min-height: 93vh !important;
   display: flex;
 }
-#footer {
+#startPage #footer {
   min-height: 6vh !important;
   display: flex;
   justify-content: space-evenly !important;
 }
-#footer div {
+#startPage #footer div {
   padding-top: 5px !important;
 }
-#footer a {
+#startPage #footer a {
   text-decoration: none;
   color: #657786;
   font-size: 13px;

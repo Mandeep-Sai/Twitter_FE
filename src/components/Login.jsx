@@ -3,8 +3,25 @@ import { Container } from "react-bootstrap";
 import "../styles/Login.css";
 
 export class Login extends Component {
-  loginHandler = () => {
-    this.props.history.push("/home");
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: {
+        username: "",
+        password: "",
+      },
+    };
+  }
+  userHandler = (e) => {
+    let user = this.state.user;
+    let id = e.currentTarget.id;
+    user[id] = e.currentTarget.value;
+    this.setState({ user });
+  };
+
+  loginHandler = async () => {
+    this.props.history.push(`/home/${this.state.user.username}`);
   };
   render() {
     return (
@@ -15,13 +32,13 @@ export class Login extends Component {
             alt="logo"
           />
           <p>Log in to Twitter</p>
-          <div id="username">
+          <div id="user">
             <p>Phone,email or username</p>
-            <input type="text" />
+            <input onChange={this.userHandler} id="username" type="text" />
           </div>
-          <div id="username">
+          <div id="user">
             <p>Password</p>
-            <input type="password" />
+            <input onChange={this.userHandler} id="password" type="password" />
           </div>
           <button onClick={this.loginHandler}>Log in</button>
           <div id="bottomContent">

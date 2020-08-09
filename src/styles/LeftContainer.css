@@ -7,7 +7,7 @@
   padding: 15px 17px;
   border-radius: 40px;
 }
-#logo img {
+#logo > img {
   width: 30px;
   height: 25px;
 }
@@ -35,4 +35,8 @@
 #leftBar > div svg {
   font-size: 32px;
   margin-left: auto;
+}
+#leftBar > #profile img {
+  height: 36px;
+  width: 36px;
 }
