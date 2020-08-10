@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../styles/Feed.css";
-import { Container, Dropdown } from "react-bootstrap";
+import { Container, Dropdown, Form } from "react-bootstrap";
 import { WiStars } from "react-icons/wi";
 import {
   AiOutlinePicture,
@@ -16,29 +16,56 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { BsChat } from "react-icons/bs";
 import { connect } from "react-redux";
 import Modal from "react-modal";
+import axios from "axios";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {
-    getPosts: (posts) => {
-      dispatch({
-        type: "GET_POSTS",
-        payload: posts,
-      });
-    },
-    deletePost: (post) => dispatch(deleteTweet(post)),
+    getTweets: () => dispatch(fetchTweets()),
+
+    removeTweet: (tweet) => dispatch(deleteTweet(tweet)),
   };
 };
-const deleteTweet = (post) => {
+const bufferToBase64 = (buf) => {
+  var binstr = Array.prototype.map
+    .call(buf, function (ch) {
+      return String.fromCharCode(ch);
+    })
+    .join("");
+  return btoa(binstr);
+};
+const fetchTweets = () => {
   return async (dispatch, getState) => {
-    let response = await fetch(`http://localhost:3003/tweets/${post._id}`, {
+    let response = await fetch("http://localhost:3003/tweets");
+    let tweets = await response.json();
+    tweets.forEach((tweet) => {
+      if (tweet.image) {
+        const tweetbase64 = bufferToBase64(tweet.image.data);
+        tweet.image = tweetbase64;
+      }
+      if (tweet.user.image) {
+        const profilebase64 = bufferToBase64(tweet.user.image.data);
+        tweet.user.image = profilebase64;
+      }
+    });
+    if (response.ok) {
+      dispatch({
+        type: "GET_TWEETS",
+        payload: tweets,
+      });
+    }
+  };
+};
+const deleteTweet = (tweet) => {
+  return async (dispatch, getState) => {
+    let response = await fetch(`http://localhost:3003/tweets/${tweet._id}`, {
       method: "DELETE",
     });
     if (response.ok) {
       alert("tweet deleted");
       dispatch({
-        type: "DELETE_POST",
-        payload: post._id,
+        type: "DELETE_TWEET",
+        payload: tweet._id,
       });
     }
   };
@@ -62,18 +89,32 @@ export class Feed extends Component {
       tweet: {
         text: "",
       },
+      image: "",
       showDelete: false,
-      selectedPost: "",
+      showEdit: false,
+      selectedTweet: "",
     };
+    this.inputRef = React.createRef();
   }
+
   componentDidMount = async () => {
-    let response = await fetch("http://localhost:3003/tweets");
-    let posts = await response.json();
     setTimeout(() => {
-      this.props.getPosts(posts);
+      this.props.getTweets();
     }, 2000);
   };
-
+  // image
+  handleImageInput = (e) => {
+    this.inputRef.current.click();
+  };
+  imageSelected = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("picture", file);
+    this.setState({
+      image: formData,
+    });
+  };
+  //
   tweetHandler = (e) => {
     let tweet = this.state.tweet;
     let id = e.currentTarget.id;
@@ -81,18 +122,62 @@ export class Feed extends Component {
     this.setState({ tweet });
   };
   sendTweet = async () => {
-    let response = await fetch("http://localhost:3003/tweets", {
+    //
+    let tweet = {
       method: "POST",
-      body: JSON.stringify(this.state.tweet),
-      headers: new Headers({
+      url: await `http://localhost:3003/tweets`,
+      headers: {
         username: this.props.user.username,
-        "Content-type": "application/json",
-      }),
-    });
-    if (response.ok) {
-      alert("tweet done");
-      this.setState({ tweet: { text: "" } });
-    }
+        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+      },
+      data: this.state.tweet,
+    };
+    let tweetResponse = await axios(tweet);
+    let tweetId = tweetResponse.data;
+    console.log(tweetId);
+    let tweetImage = {
+      method: "POST",
+      url: await `http://localhost:3003/tweets/${tweetId}`,
+      headers: {
+        username: this.props.user.username,
+        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+      },
+      data: this.state.image,
+    };
+    let tweetImageResponse = await axios(tweetImage);
+    this.setState({ tweet: { text: "" }, image: "" });
+    this.props.getTweets();
+  };
+  //Editing a tweet
+  editTweet = async () => {
+    let editTweet = {
+      method: "PUT",
+      url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
+      headers: {
+        username: this.props.user.username,
+        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+      },
+      data: this.state.tweet,
+    };
+
+    let tweetResponse = await axios(editTweet);
+    console.log(this.state.selectedTweet._id);
+    /*
+    let tweetId = tweetResponse.data;
+    console.log(tweetId);
+    */
+    let tweetImage = {
+      method: "POST",
+      url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
+      headers: {
+        username: this.props.user.username,
+        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+      },
+      data: this.state.image,
+    };
+    let tweetImageResponse = await axios(tweetImage);
+    this.setState({ tweet: { text: "" }, image: "", selectedTweet: "" });
+    this.props.getTweets();
   };
 
   render() {
@@ -115,12 +200,20 @@ export class Feed extends Component {
                 id="text"
                 onChange={this.tweetHandler}
                 placeholder="What's happening?"
+                value={this.state.tweet.text}
                 type="text"
               />
             </div>
             <div id="icons">
               <div>
-                <AiOutlinePicture />
+                <AiOutlinePicture onClick={this.handleImageInput} />
+                <input
+                  ref={this.inputRef}
+                  style={{ display: "none" }}
+                  type="file"
+                  name="picture"
+                  onChange={this.imageSelected}
+                />
                 <AiOutlineFileGif />
                 <FiBarChart />
                 <FaRegSmile />
@@ -134,7 +227,7 @@ export class Feed extends Component {
           <hr
             style={{ margin: "0px", borderTop: "15px solid rgba(0,0,0,0.1)" }}
           />
-          {this.props.posts.map((post) => {
+          {this.props.tweets.map((tweet) => {
             return (
               <div className="tweet">
                 <img
@@ -146,9 +239,9 @@ export class Feed extends Component {
                   <div className="name">
                     <div>
                       <p style={{ fontSize: "18px", fontWeight: "700" }}>
-                        {post.user.name}{" "}
+                        {tweet.user.name}{" "}
                         <span style={{ fontWeight: "400", color: "#9AA5AF" }}>
-                          @{post.user.username}
+                          @{tweet.user.username}
                         </span>
                       </p>
 
@@ -164,18 +257,27 @@ export class Feed extends Component {
                           </div>
                         </Dropdown.Toggle>
 
-                        {post.user.username === this.props.user.username ? (
+                        {tweet.user.username === this.props.user.username ? (
                           <Dropdown.Menu>
-                            <Dropdown.Item>Edit Post</Dropdown.Item>
+                            <Dropdown.Item
+                              onClick={() =>
+                                this.setState({
+                                  showEdit: true,
+                                  selectedTweet: tweet,
+                                })
+                              }
+                            >
+                              Edit Tweet
+                            </Dropdown.Item>
                             <Dropdown.Item
                               onClick={() =>
                                 this.setState({
                                   showDelete: true,
-                                  selectedPost: post,
+                                  selectedTweet: tweet,
                                 })
                               }
                             >
-                              Delete Post
+                              Delete Tweet
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         ) : (
@@ -185,14 +287,14 @@ export class Feed extends Component {
                             </Dropdown.Item>
 
                             <Dropdown.Item>
-                              Unfollow @{post.user.username}
+                              Unfollow @{tweet.user.username}
                             </Dropdown.Item>
                             <Dropdown.Item>Add/remove from Lists</Dropdown.Item>
                             <Dropdown.Item>
-                              Mute @{post.user.username}
+                              Mute @{tweet.user.username}
                             </Dropdown.Item>
                             <Dropdown.Item>
-                              Block @{post.user.username}
+                              Block @{tweet.user.username}
                             </Dropdown.Item>
                             <Dropdown.Item>Embed Tweet</Dropdown.Item>
                             <Dropdown.Item>Report Tweet</Dropdown.Item>
@@ -200,10 +302,14 @@ export class Feed extends Component {
                         )}
                       </Dropdown>
                     </div>
-                    <p style={{ fontSize: "16px" }}>{post.text}</p>
+                    <p style={{ fontSize: "16px" }}>{tweet.text}</p>
                   </div>
-                  {post.image ? (
-                    <img className="img-fluid" src={post.image} alt="" />
+                  {tweet.image ? (
+                    <img
+                      className="img-fluid"
+                      src={`data:image/jpeg;base64,${tweet.image}`}
+                      alt=""
+                    />
                   ) : null}
                   <div className="icons">
                     <p>
@@ -239,30 +345,74 @@ export class Feed extends Component {
           <Modal
             isOpen={this.state.showDelete}
             onRequestClose={() =>
-              this.setState({ showDelete: false, selectedPost: "" })
+              this.setState({ showDelete: false, selectedTweet: "" })
             }
             style={customStyles}
             contentLabel="Example Modal"
           >
-            <div>
-              <h2>Are you sure ?</h2>
+            <div id="deleteTweet">
+              <div id="heading">
+                <h2>Are you sure ?</h2>
+              </div>
+              <div id="buttons">
+                <button
+                  onClick={() => {
+                    this.props.removeTweet(this.state.selectedTweet);
+                    this.setState({ showDelete: false, selectedTweet: "" });
+                  }}
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() =>
+                    this.setState({ showDelete: false, selectedTweet: "" })
+                  }
+                >
+                  Close
+                </button>
+              </div>
             </div>
-            <div>
-              <button
-                onClick={() => {
-                  this.props.deletePost(this.state.selectedPost);
-                  this.setState({ showDelete: false, selectedPost: "" });
-                }}
-              >
-                Confirm
-              </button>
-              <button
-                onClick={() =>
-                  this.setState({ showDelete: false, selectedPost: "" })
-                }
-              >
-                Close
-              </button>
+          </Modal>
+          {/* edit modal */}
+          <Modal
+            isOpen={this.state.showEdit}
+            onRequestClose={() =>
+              this.setState({ showEdit: false, selectedTweet: "" })
+            }
+            style={customStyles}
+            contentLabel="Example Modal"
+          >
+            <div id="editTweet">
+              <div id="heading">
+                <h2>Edit your tweet</h2>
+              </div>
+              <div id="content">
+                <textarea
+                  type="text"
+                  value={this.state.tweet.text}
+                  onChange={this.tweetHandler}
+                  placeholder="tweet"
+                  id="text"
+                />
+                <input type="file" onChange={this.imageSelected} />
+              </div>
+              <div id="buttons">
+                <button
+                  onClick={() => {
+                    this.editTweet();
+                    this.setState({ showEdit: false });
+                  }}
+                >
+                  Update
+                </button>
+                <button
+                  onClick={() =>
+                    this.setState({ showEdit: false, selectedTweet: "" })
+                  }
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </Modal>
         </Container>

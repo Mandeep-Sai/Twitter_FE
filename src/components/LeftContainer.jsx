@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/LeftContainer.css";
 import { GoHome } from "react-icons/go";
 import { FiHash, FiBell, FiMail, FiBookmark } from "react-icons/fi";
 import { AiOutlineUser } from "react-icons/ai";
 import { BsCardText, BsThreeDots } from "react-icons/bs";
 import { RiQuillPenLine } from "react-icons/ri";
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+const mapStateToProps = (state) => state;
 
-export default function LeftContainer() {
+function LeftContainer(props) {
+  console.log(props);
   return (
     <div id="leftBar">
       <div id="logo">
@@ -15,8 +19,10 @@ export default function LeftContainer() {
           alt=""
         />
       </div>
-      <div class="active">
-        <GoHome />
+      <div className={props.active === "home" ? "active" : null}>
+        <Link to={`/home/${props.username}`}>
+          <GoHome />
+        </Link>
       </div>
       <div>
         <FiHash />
@@ -33,8 +39,10 @@ export default function LeftContainer() {
       <div>
         <BsCardText />
       </div>
-      <div>
-        <AiOutlineUser />
+      <div className={props.active === "userInfo" ? "active" : null}>
+        <Link to={`/userInfo/${props.username}`}>
+          <AiOutlineUser />
+        </Link>
       </div>
       <div>
         <BsThreeDots />
@@ -51,3 +59,4 @@ export default function LeftContainer() {
     </div>
   );
 }
+export default connect(mapStateToProps)(withRouter(LeftContainer));

@@ -63,6 +63,9 @@
 #createTweet #icons button:hover {
   background-color: #0093ee;
 }
+#createTweet #icons button:focus {
+  outline: none;
+}
 .tweet {
   display: flex;
   padding: 15px;
@@ -122,6 +125,7 @@
 .tweet .content > img {
   border-radius: 20px;
   height: 300px;
+  width: 90%;
 }
 .tweet .content .icons {
   display: flex;
@@ -158,4 +162,63 @@
 
 .ReactModal__Overlay--before-close {
   opacity: 0;
+}
+/* Edit Modal */
+#editTweet #heading {
+  text-align: center !important;
+}
+#editTweet #content {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+#editTweet #content textarea {
+  width: 400px;
+  font-size: 20px;
+  border-radius: 10px;
+  margin: 10px 0px;
+  padding-left: 15px;
+}
+#editTweet #content textarea:focus {
+  outline: none;
+}
+#editTweet #buttons {
+  margin-left: 25%;
+  padding: 15px;
+}
+#editTweet #buttons button:first-of-type,
+#editTweet #buttons button:nth-of-type(2) {
+  margin: 0px 10px;
+  width: 90px;
+  height: 40px;
+  margin-left: auto;
+  color: white;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 20px;
+}
+#editTweet #buttons button:first-of-type:focus,
+#editTweet #buttons button:nth-of-type(2):focus {
+  outline: none;
+}
+#deleteTweet #heading {
+  text-align: center !important;
+}
+#deleteTweet #buttons {
+  padding: 15px;
+}
+#deleteTweet #buttons button:first-of-type,
+#deleteTweet #buttons button:nth-of-type(2) {
+  margin: 0px 10px;
+  width: 90px;
+  height: 40px;
+  margin-left: auto;
+  color: white;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 20px;
+}
+#deleteTweet #buttons button:first-of-type:focus,
+#deleteTweet #buttons button:nth-of-type(2):focus {
+  outline: none;
 }

@@ -6,6 +6,8 @@ import "../../styles/Home.css";
 import Feed from "./Feed";
 import { connect } from "react-redux";
 
+const mapStateToProps = (state) => state;
+
 const mapDispatchToProps = (dispatch) => {
   return {
     getUser: (user) => {
@@ -40,7 +42,7 @@ export class Home extends Component {
     return (
       <Container id="home">
         <div>
-          <LeftContainer />
+          <LeftContainer active="home" />
         </div>
         <div>
           <Feed />
@@ -53,4 +55,4 @@ export class Home extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

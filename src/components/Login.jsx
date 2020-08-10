@@ -1,7 +1,17 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
 import "../styles/Login.css";
+import { connect } from "react-redux";
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setUser: (username) =>
+      dispatch({
+        type: "SET_USERNAME",
+        payload: username,
+      }),
+  };
+};
 export class Login extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +31,7 @@ export class Login extends Component {
   };
 
   loginHandler = async () => {
+    this.props.setUser(this.state.user.username);
     this.props.history.push(`/home/${this.state.user.username}`);
   };
   render() {
@@ -55,4 +66,4 @@ export class Login extends Component {
   }
 }
 
-export default Login;
+export default connect(null, mapDispatchToProps)(Login);

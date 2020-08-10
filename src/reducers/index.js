@@ -1,26 +1,32 @@
 export default function (state = {}, action) {
   switch (action.type) {
+    case "SET_USERNAME":
+      return {
+        ...state,
+        username: action.payload,
+      };
     case "GET_USERINFO":
       return {
         ...state,
         user: action.payload,
       };
-    case "GET_POSTS":
+    case "GET_TWEETS":
       return {
         ...state,
-        posts: action.payload,
+        tweets: action.payload,
       };
-    case "DELETE_POST":
-      const postToRemove = state.posts.findIndex(
-        (post) => post._id === action.payload
+    case "DELETE_TWEET":
+      const postToRemove = state.tweets.findIndex(
+        (tweet) => tweet._id === action.payload
       );
       return {
         ...state,
-        posts: [
-          ...state.posts.slice(0, postToRemove),
-          ...state.posts.slice(postToRemove + 1),
+        tweets: [
+          ...state.tweets.slice(0, postToRemove),
+          ...state.tweets.slice(postToRemove + 1),
         ],
       };
+
     default:
       return state;
   }
