@@ -36,8 +36,10 @@ function LeftContainer(props) {
       <div>
         <FiBookmark />
       </div>
-      <div>
-        <BsCardText />
+      <div className={props.active === "lists" ? "active" : null}>
+        <Link to={`/${props.username}/lists`}>
+          <BsCardText />
+        </Link>
       </div>
       <div className={props.active === "userInfo" ? "active" : null}>
         <Link to={`/userInfo/${props.username}`}>
