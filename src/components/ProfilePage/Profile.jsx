@@ -7,13 +7,18 @@ import { BsArrowLeft, BsCalendar } from "react-icons/bs";
 import { FiMapPin } from "react-icons/fi";
 import { GiBalloons } from "react-icons/gi";
 import { connect } from "react-redux";
+import MyTweets from "./MyTweets";
+import Media from "./Media";
+import Likes from "./Likes";
 const mapStateToProps = (state) => state;
 
 export class Profile extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      active: "tweets",
+    };
   }
 
   render() {
@@ -66,6 +71,35 @@ export class Profile extends Component {
                 </p>
               </div>
             </div>
+            <div id="myTweets">
+              <div
+                onClick={() => this.setState({ active: "tweets" })}
+                className={this.state.active === "tweets" ? "active" : null}
+              >
+                Tweets
+              </div>
+              <div
+                onClick={() => this.setState({ active: "replies" })}
+                className={this.state.active === "replies" ? "active" : null}
+              >
+                Tweets & replies
+              </div>
+              <div
+                onClick={() => this.setState({ active: "media" })}
+                className={this.state.active === "media" ? "active" : null}
+              >
+                Media
+              </div>
+              <div
+                onClick={() => this.setState({ active: "likes" })}
+                className={this.state.active === "likes" ? "active" : null}
+              >
+                Likes
+              </div>
+            </div>
+            {this.state.active === "tweets" ? <MyTweets /> : null}
+            {this.state.active === "media" ? <Media /> : null}
+            {this.state.active === "likes" ? <Likes /> : null}
           </Container>
         </div>
         <div>

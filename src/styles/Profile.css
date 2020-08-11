@@ -84,3 +84,49 @@
 #profile #info #followers p {
   margin-right: 15px;
 }
+#profile #myTweets {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+#profile #myTweets > div {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 650;
+  padding: 10px;
+  color: #657786;
+  border-bottom: 1.5px solid #657786;
+}
+#profile #myTweets > div:hover {
+  color: #1da1f2;
+  background-color: rgba(29, 161, 242, 0.1);
+  cursor: pointer;
+}
+#profile #myTweets .active {
+  color: #1da1f2;
+  border-bottom: 2px solid #1da1f2;
+}
+#profile #media {
+  padding: 15px;
+  margin-top: 40px;
+  text-align: center;
+}
+#profile #media p:first-of-type {
+  font-weight: 650;
+  font-size: 20px;
+}
+#profile #media p:nth-of-type(2) {
+  color: #657786;
+}
+#profile #media button {
+  margin-top: 10px;
+  height: 40px;
+  background-color: #1da1f2;
+  border: none;
+  border-radius: 20px;
+  color: white;
+  font-weight: 650;
+  width: 200px;
+}
