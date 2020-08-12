@@ -39,6 +39,18 @@ export class Profile extends Component {
     userInfo["image"] = profileBase64;
     this.setState({ userInfo });
   };
+  componentDidUpdate = async (prevProps) => {
+    if (prevProps.match.params.username !== this.props.match.params.username) {
+      this.setState({ user: this.props.match.params.username });
+      let response = await fetch(
+        `http://localhost:3003/profiles/${this.props.match.params.username}`
+      );
+      let userInfo = await response.json();
+      const profileBase64 = this.bufferToBase64(userInfo.image.data);
+      userInfo["image"] = profileBase64;
+      this.setState({ userInfo });
+    }
+  };
   render() {
     return (
       <Container id="profile">

@@ -56,11 +56,19 @@ export class MyTweets extends Component {
     );
     this.setState({ tweets });
   };
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.userId !== this.props.userId) {
+      let tweets = this.props.tweets.filter(
+        (tweet) => tweet.user.username === this.props.userId
+      );
 
+      this.setState({ tweets });
+    }
+  };
   render() {
     return (
       <>
-        {this.state.tweets.length > 1 &&
+        {this.state.tweets.length > 0 &&
           this.state.tweets.map((tweet) => {
             return (
               <div className="tweet">

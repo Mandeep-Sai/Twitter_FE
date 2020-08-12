@@ -1,16 +1,67 @@
 import React, { Component } from "react";
 import { FiSearch, FiSettings } from "react-icons/fi";
 import "../styles/RightContainer.css";
+import { Link } from "react-router-dom";
 
 export class RightContainer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      query: "",
+      users: "",
+      filteredUsers: "",
+    };
+  }
+  updateQuery = (e) => {
+    this.setState({ query: e.currentTarget.value });
+    let filteredUsers = this.state.users.filter((user) =>
+      user.name.toLowerCase().includes(this.state.query)
+    );
+    this.setState({ filteredUsers });
+  };
+  resetAll = () => {
+    this.setState({ filteredUsers: "", query: "" });
+  };
+  componentDidMount = async () => {
+    let response = await fetch(`http://localhost:3003/profiles`);
+    let users = await response.json();
+
+    this.setState({ users });
+  };
   render() {
     return (
       <>
         <div id="rightBar">
           <div id="search">
             <FiSearch />
-            <input placeholder="Search Twitter" type="text" />
+            <input
+              onChange={this.updateQuery}
+              placeholder="Search Twitter"
+              type="text"
+              value={this.state.query}
+            />
           </div>
+
+          {this.state.query.length > 1 ? (
+            <div id="searchDropdown">
+              {this.state.filteredUsers.length > 0 ? (
+                this.state.filteredUsers.map((user) => {
+                  return (
+                    <>
+                      <Link to={`/userInfo/${user.username}`}>
+                        <p onClick={this.resetAll}>{user.name}</p>
+                      </Link>
+                    </>
+                  );
+                })
+              ) : (
+                <div>
+                  <p>No results</p>
+                </div>
+              )}
+            </div>
+          ) : null}
           <div id="trending">
             <div id="header">
               <p>Trends for you</p>

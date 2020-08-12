@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import LeftContainer from "../LeftContainer";
-import RightContainer from "../RightContainer";
 import "../../styles/Home.css";
+import RightContainer from "../RightContainer";
 import Feed from "./Feed";
 import { connect } from "react-redux";
 

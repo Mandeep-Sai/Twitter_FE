@@ -6,7 +6,7 @@
   margin-top: 10px;
   padding: 10px 15px;
   width: 100%;
-
+  position: relative;
   border-radius: 40px;
   background-color: #e6ecf0;
 }
@@ -123,4 +123,30 @@
 #rightBar #footer a:hover {
   text-decoration: none;
   color: #657786;
+}
+#rightBar #searchDropdown {
+  margin-top: 2px;
+  position: absolute;
+  width: 28vw;
+  background-color: white;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
+}
+#rightBar #searchDropdown a {
+  text-decoration: none !important;
+  color: black !important;
+}
+#rightBar #searchDropdown p {
+  margin: 0px;
+  width: 100%;
+  height: 35px;
+  margin-left: 10px;
+  padding-top: 5px;
+}
+
+@media only screen and (max-width: 998px) {
+  #rightBar {
+    display: none !important;
+  }
 }
