@@ -43,3 +43,63 @@
   height: 36px;
   width: 36px;
 }
+.ReactModal__Content {
+  padding: 0px !important;
+  border-radius: 10px !important;
+  width: 500px !important;
+}
+#createTweetModal #heading {
+  font-size: 24px;
+  padding: 5px 10px;
+  color: #1da1f2;
+}
+#createTweetModal #heading svg:hover {
+  cursor: pointer;
+}
+#createTweetModal #content {
+  display: flex;
+  padding: 0px 10px;
+}
+#createTweetModal #content img {
+  height: 45px;
+  width: 45px;
+  background-color: black;
+  border-radius: 40px;
+}
+#createTweetModal #content textarea {
+  width: 450px;
+  height: 120px;
+  margin-left: 10px;
+  border: none;
+  font-size: 24px;
+}
+#createTweetModal #content textarea:focus {
+  outline: none;
+  border: none;
+}
+#createTweetModal #footer {
+  padding: 10px;
+  display: flex;
+  margin-left: 20%;
+  justify-content: space-between;
+}
+#createTweetModal #footer button {
+  width: 80px;
+  height: 40px;
+  background-color: #1da1f2;
+  color: white;
+  font-weight: 650;
+  border: none;
+  border-radius: 20px;
+}
+#createTweetModal #footer button:hover {
+  cursor: pointer;
+}
+#createTweetModal #footer svg {
+  font-size: 24px;
+  color: #1da1f2;
+  margin-right: 15px;
+}
+#createTweetModal #footer svg:hover {
+  cursor: pointer;
+}

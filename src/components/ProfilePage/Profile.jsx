@@ -18,14 +18,36 @@ export class Profile extends Component {
 
     this.state = {
       active: "tweets",
+      user: this.props.match.params.username,
+      userInfo: "",
     };
   }
-
+  bufferToBase64 = (buf) => {
+    var binstr = Array.prototype.map
+      .call(buf, function (ch) {
+        return String.fromCharCode(ch);
+      })
+      .join("");
+    return btoa(binstr);
+  };
+  componentDidMount = async () => {
+    let response = await fetch(
+      `http://localhost:3003/profiles/${this.state.user}`
+    );
+    let userInfo = await response.json();
+    const profileBase64 = this.bufferToBase64(userInfo.image.data);
+    userInfo["image"] = profileBase64;
+    this.setState({ userInfo });
+  };
   render() {
     return (
       <Container id="profile">
         <div>
-          <LeftContainer active="userInfo" />
+          {this.state.user === this.props.username ? (
+            <LeftContainer active="userInfo" />
+          ) : (
+            <LeftContainer />
+          )}
         </div>
         <div>
           <Container id="userInfo">
@@ -34,30 +56,30 @@ export class Profile extends Component {
                 <BsArrowLeft />
               </div>
               <div id="name">
-                <p>Mandeep Sai</p>
+                <p>{this.state.userInfo.name}</p>
                 <p>tweets length</p>
               </div>
             </div>
             <div id="bgImage"></div>
             <div id="image">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQQ7CoqlHVkGqkv8cjCtNYY9pI99vjRVpugZg&usqp=CAU"
+                src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
                 alt=""
               />
               <button>Edit Profile</button>
             </div>
             <div id="info">
-              <p>Mandeep Sai</p>
-              <p>@bandi</p>
+              <p>{this.state.userInfo.name}</p>
+              <p>@{this.state.userInfo.username}</p>
               <div id="dates">
                 <p>
-                  <FiMapPin /> Hanover, Lower Saxony
+                  <FiMapPin /> {this.state.userInfo.area}
                 </p>
                 <p>
                   <GiBalloons /> Born 15 Aug 1996
                 </p>
                 <p>
-                  <BsCalendar /> Joined Apr 14
+                  <BsCalendar /> {this.state.userInfo.createdAt}
                 </p>
               </div>
               <div id="followers">
@@ -97,7 +119,9 @@ export class Profile extends Component {
                 Likes
               </div>
             </div>
-            {this.state.active === "tweets" ? <MyTweets /> : null}
+            {this.state.active === "tweets" ? (
+              <MyTweets userId={this.state.user} />
+            ) : null}
             {this.state.active === "media" ? <Media /> : null}
             {this.state.active === "likes" ? <Likes /> : null}
           </Container>

@@ -47,106 +47,131 @@ export class MyTweets extends Component {
     this.state = {
       showDelete: false,
       selectedTweet: "",
+      tweets: "",
     };
   }
+  componentDidMount = () => {
+    let tweets = this.props.tweets.filter(
+      (tweet) => tweet.user.username === this.props.userId
+    );
+    this.setState({ tweets });
+  };
 
   render() {
     return (
       <>
-        {this.props.tweets.map((tweet) => {
-          return (
-            <div className="tweet">
-              <img
-                className="img-fluid"
-                src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg"
-                alt=""
-              />
-              <div className="content">
-                <div className="name">
-                  <div>
-                    <p style={{ fontSize: "18px", fontWeight: "700" }}>
-                      {tweet.user.name}{" "}
-                      <span style={{ fontWeight: "400", color: "#9AA5AF" }}>
-                        @{tweet.user.username}
-                      </span>
-                    </p>
+        {this.state.tweets.length > 1 &&
+          this.state.tweets.map((tweet) => {
+            return (
+              <div className="tweet">
+                <img
+                  className="img-fluid"
+                  src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg"
+                  alt=""
+                />
+                <div className="content">
+                  <div className="name">
+                    <div>
+                      <p style={{ fontSize: "18px", fontWeight: "700" }}>
+                        {tweet.user.name}{" "}
+                        <span style={{ fontWeight: "400", color: "#9AA5AF" }}>
+                          @{tweet.user.username}
+                        </span>
+                      </p>
 
-                    <Dropdown>
-                      <Dropdown.Toggle className="d-flex">
-                        <div
-                          className="dropdown"
-                          onClick={() => this.setState({ showDropdown: true })}
-                        >
-                          <MdKeyboardArrowDown />
-                        </div>
-                      </Dropdown.Toggle>
-
-                      {tweet.user.username === this.props.user.username ? (
-                        <Dropdown.Menu>
-                          <Dropdown.Item
+                      <Dropdown>
+                        <Dropdown.Toggle className="d-flex">
+                          <div
+                            className="dropdown"
                             onClick={() =>
-                              this.setState({
-                                showDelete: true,
-                                selectedTweet: tweet,
-                              })
+                              this.setState({ showDropdown: true })
                             }
                           >
-                            <span style={{ color: "#E12D64" }}>
-                              {" "}
-                              Delete Tweet
-                            </span>
-                          </Dropdown.Item>
-                          <Dropdown.Item>Pin to profile</Dropdown.Item>
-                          <Dropdown.Item>Embed Tweet</Dropdown.Item>
-                        </Dropdown.Menu>
-                      ) : null}
-                    </Dropdown>
+                            <MdKeyboardArrowDown />
+                          </div>
+                        </Dropdown.Toggle>
+
+                        {tweet.user.username === this.props.user.username ? (
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              onClick={() =>
+                                this.setState({
+                                  showDelete: true,
+                                  selectedTweet: tweet,
+                                })
+                              }
+                            >
+                              <span style={{ color: "#E12D64" }}>
+                                {" "}
+                                Delete Tweet
+                              </span>
+                            </Dropdown.Item>
+                            <Dropdown.Item>Pin to profile</Dropdown.Item>
+                            <Dropdown.Item>Embed Tweet</Dropdown.Item>
+                          </Dropdown.Menu>
+                        ) : (
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              Follow @{tweet.user.username}
+                            </Dropdown.Item>
+                            <Dropdown.Item>Add/Remove from Lists</Dropdown.Item>
+                            <Dropdown.Item>
+                              Mute @{tweet.user.username}
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              Block @{tweet.user.username}
+                            </Dropdown.Item>
+                            <Dropdown.Item>Embed Tweet</Dropdown.Item>
+                            <Dropdown.Item>Report Tweet</Dropdown.Item>
+                          </Dropdown.Menu>
+                        )}
+                      </Dropdown>
+                    </div>
+                    <p style={{ fontSize: "16px" }}>{tweet.text}</p>
                   </div>
-                  <p style={{ fontSize: "16px" }}>{tweet.text}</p>
-                </div>
-                {tweet.image ? (
-                  <img
-                    className="img-fluid"
-                    src={`data:image/jpeg;base64,${tweet.image}`}
-                    alt=""
-                  />
-                ) : null}
-                <div className="icons">
-                  <p>
-                    <BsChat />{" "}
-                    <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                      7
-                    </span>
-                  </p>
-                  <p>
-                    <AiOutlineRetweet />{" "}
-                    <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                      7
-                    </span>
-                  </p>
-                  <p>
-                    <AiOutlineHeart />{" "}
-                    <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                      7
-                    </span>
-                  </p>
-                  <p>
-                    <FiUpload />{" "}
-                    <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                      7
-                    </span>
-                  </p>
-                  <p>
-                    <FiBarChart2 />{" "}
-                    <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                      7
-                    </span>
-                  </p>
+                  {tweet.image ? (
+                    <img
+                      className="img-fluid"
+                      src={`data:image/jpeg;base64,${tweet.image}`}
+                      alt=""
+                    />
+                  ) : null}
+                  <div className="icons">
+                    <p>
+                      <BsChat />{" "}
+                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                        7
+                      </span>
+                    </p>
+                    <p>
+                      <AiOutlineRetweet />{" "}
+                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                        7
+                      </span>
+                    </p>
+                    <p>
+                      <AiOutlineHeart />{" "}
+                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                        7
+                      </span>
+                    </p>
+                    <p>
+                      <FiUpload />{" "}
+                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                        7
+                      </span>
+                    </p>
+                    <p>
+                      <FiBarChart2 />{" "}
+                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                        7
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
         <Modal
           isOpen={this.state.showDelete}
           onRequestClose={() =>
