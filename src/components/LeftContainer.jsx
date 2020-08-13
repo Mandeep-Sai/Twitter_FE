@@ -30,6 +30,17 @@ const customStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
+const logoutStyles = {
+  content: {
+    maxWidth: "250px",
+    top: "71%",
+    left: "15%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
 class LeftContainer extends React.Component {
   constructor(props) {
     super(props);
@@ -40,6 +51,7 @@ class LeftContainer extends React.Component {
       },
       image: "",
       showCreateTweet: false,
+      showLogout: false,
     };
     this.inputRef = React.createRef();
   }
@@ -130,7 +142,7 @@ class LeftContainer extends React.Component {
         <div onClick={() => this.setState({ showCreateTweet: true })}>
           <RiQuillPenLine />
         </div>
-        <div id="profile">
+        <div id="profile" onClick={() => this.setState({ showLogout: true })}>
           <img
             src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
             alt=""
@@ -204,6 +216,37 @@ class LeftContainer extends React.Component {
             </div>
           </div>
         </Modal>
+        {/* Logout Modal */}
+
+        {this.props.user ? (
+          <Modal
+            isOpen={this.state.showLogout}
+            onRequestClose={() =>
+              this.setState({
+                showLogout: false,
+              })
+            }
+            style={logoutStyles}
+            contentLabel="Example Modal"
+          >
+            <div id="logoutModal">
+              <div id="heading">
+                <img
+                  src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
+                  alt=""
+                />
+                <div>
+                  <p>{this.props.user.name}</p>
+                  <p>@{this.props.user.username}</p>
+                </div>
+              </div>
+              <hr style={{ marginTop: "0.3rem", marginBottom: "0.5rem" }} />
+              <p>Add a existing account</p>
+              <hr style={{ marginTop: "0.3rem", marginBottom: "0.5rem" }} />
+              <p>Log out @{this.props.user.username}</p>
+            </div>
+          </Modal>
+        ) : null}
       </div>
     );
   }

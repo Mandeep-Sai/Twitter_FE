@@ -97,6 +97,9 @@
   font-size: 15px;
   font-weight: 600;
 }
+#main #rightColumn #content > div #buttons button:focus {
+  outline: none;
+}
 #main #rightColumn #content > div #buttons button:first-of-type {
   color: white;
   background-color: #1da1f2;
@@ -113,6 +116,73 @@
 #main #rightColumn #content > div #buttons button:first-of-type:hover {
   background-color: rgb(26, 145, 218);
   cursor: pointer;
+}
+#registerModal #logo {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+#registerModal #logo img {
+  width: 35px;
+  height: 30px;
+}
+#registerModal #logo button {
+  width: 100px;
+  height: 40px;
+  background-color: #1da1f2;
+  color: white;
+  font-weight: 650;
+  border: none;
+  border-radius: 20px;
+}
+#registerModal #info {
+  padding: 10px 20px;
+}
+#registerModal #info p {
+  margin: 0px;
+}
+#registerModal #info > p:first-of-type {
+  margin: 0px;
+  font-size: 26px;
+  font-weight: 650;
+}
+#registerModal #info .inputDivs {
+  height: 60px;
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #f5f8fa;
+  border-bottom: 2px solid #657786;
+}
+#registerModal #info .inputDivs p {
+  margin: 0;
+  margin-left: 5px;
+  color: #657786;
+}
+#registerModal #info .inputDivs input {
+  font-size: 18px;
+  border: none;
+  background-color: #f5f8fa !important;
+  width: 100%;
+}
+#registerModal #info .inputDivs input:active {
+  outline: none !important;
+  background-color: #f5f8fa !important;
+}
+#registerModal #info .inputDivs input:focus {
+  outline: none !important;
+  background-color: #f5f8fa !important;
+}
+#registerModal #info > p:nth-of-type(2) {
+  font-size: 16px;
+  font-weight: 650 !important;
+  margin-top: 20px;
+}
+#registerModal #info > p:nth-of-type(3) {
+  color: #657786;
+}
+#registerModal #info > input {
+  width: 100%;
+  height: 40px;
 }
 @media (max-width: 992px) {
   #main {

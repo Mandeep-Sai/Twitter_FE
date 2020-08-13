@@ -6,13 +6,61 @@ import { RiSearchLine, RiChat1Line } from "react-icons/ri";
 import { BsPeople } from "react-icons/bs";
 import { withRouter } from "react-router-dom";
 
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    borderRadius: "20px",
+  },
+};
+
 class StartPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      showRegister: false,
+      info: {
+        name: "",
+        email: "",
+        username: "",
+        password: "",
+        dob: "",
+        area: "",
+      },
+    };
   }
 
   loginHandler = () => {
     this.props.history.push("/login");
+  };
+  updateInfo = (e) => {
+    let info = this.state.info;
+    let id = e.currentTarget.id;
+    info[id] = e.currentTarget.value;
+    this.setState({ info });
+  };
+  registerUser = async (e) => {
+    e.preventDefault();
+    let response = await fetch("http://localhost:3003/profiles", {
+      method: "POST",
+      body: JSON.stringify(this.state.info),
+      headers: new Headers({
+        "content-Type": "application/json",
+      }),
+    });
+    if (response.ok) {
+      alert("successfully registered, login to the website");
+      this.setState({ showRegister: false });
+      this.props.history.push("/login");
+    }
+
+    console.log(this.state.info);
   };
   render() {
     return (
@@ -62,7 +110,11 @@ class StartPage extends React.Component {
                 <div>
                   <p>Join Twitter today.</p>
                   <div id="buttons">
-                    <button>Sign up</button>
+                    <button
+                      onClick={() => this.setState({ showRegister: true })}
+                    >
+                      Sign up
+                    </button>
                     <button onClick={this.loginHandler}>Log in</button>
                   </div>
                 </div>
@@ -92,6 +144,86 @@ class StartPage extends React.Component {
             <a href="/">2020 Twitter, Inc.</a>
           </div>
         </Row>
+        {/* register modal */}
+        <Modal
+          isOpen={this.state.showRegister}
+          onRequestClose={() =>
+            this.setState({
+              showRegister: false,
+            })
+          }
+          style={customStyles}
+          contentLabel="Example Modal"
+        >
+          <div id="registerModal">
+            <form>
+              <div id="logo">
+                <div></div>
+                <div>
+                  <img
+                    src="https://upload.wikimedia.org/wikipedia/de/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"
+                    alt=""
+                  />
+                </div>
+                <div>
+                  <button onClick={this.registerUser} type="submit">
+                    Register
+                  </button>
+                </div>
+              </div>
+              <div id="info">
+                <p>Create your account</p>
+                <div className="inputDivs">
+                  <p>Name</p>
+                  <input
+                    onChange={this.updateInfo}
+                    id="name"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div className="inputDivs">
+                  <p>Email</p>
+                  <input
+                    onChange={this.updateInfo}
+                    id="email"
+                    type="email"
+                    required
+                  />
+                </div>
+                <div className="inputDivs">
+                  <p>Username</p>
+                  <input
+                    onChange={this.updateInfo}
+                    id="username"
+                    type="text"
+                    required
+                    minLength="5"
+                  />
+                </div>
+                <div className="inputDivs">
+                  <p>Password</p>
+                  <input
+                    onChange={this.updateInfo}
+                    id="password"
+                    type="password"
+                    required
+                  />
+                </div>
+                <p>Date of Birth</p>
+                <p>
+                  This will not be shown publicly. Confirm your own age, even if
+                  this account is for a business, a pet or something else.
+                </p>
+                <input id="dob" onChange={this.updateInfo} type="date" />
+                <div className="inputDivs">
+                  <p>City</p>
+                  <input onChange={this.updateInfo} id="area" type="text" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </Modal>
       </Container>
     );
   }

@@ -103,3 +103,34 @@
 #createTweetModal #footer svg:hover {
   cursor: pointer;
 }
+
+#logoutModal {
+  padding: 10px;
+}
+#logoutModal p {
+  margin: 0px;
+}
+#logoutModal #heading {
+  display: flex;
+}
+#logoutModal #heading img {
+  height: 45px;
+  width: 45px;
+  border-radius: 40px;
+}
+#logoutModal #heading div {
+  margin-left: 10px;
+}
+#logoutModal #heading div p:first-of-type {
+  font-weight: 650;
+  font-size: 20px;
+}
+#logoutModal #heading div p:nth-of-type(2) {
+  color: #657786;
+}
+#logoutModal > p {
+  padding: 6px 10px;
+}
+#logoutModal > p:hover {
+  cursor: pointer;
+}
