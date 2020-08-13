@@ -58,6 +58,8 @@ class StartPage extends React.Component {
       alert("successfully registered, login to the website");
       this.setState({ showRegister: false });
       this.props.history.push("/login");
+    } else {
+      alert("username or email exists");
     }
 
     console.log(this.state.info);
