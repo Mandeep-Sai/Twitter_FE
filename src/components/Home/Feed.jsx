@@ -7,7 +7,6 @@ import {
   AiOutlineFileGif,
   AiOutlineRetweet,
   AiOutlineHeart,
-  AiOutlineClose,
 } from "react-icons/ai";
 import { FiBarChart, FiUpload } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
@@ -17,6 +16,8 @@ import { BsChat } from "react-icons/bs";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import axios from "axios";
+import alanBtn from "@alan-ai/alan-sdk-web";
+import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -94,13 +95,14 @@ export class Feed extends Component {
       showEdit: false,
       selectedTweet: "",
     };
+    this.alanBtnInstance = null;
     this.inputRef = React.createRef();
   }
 
   componentDidMount = async () => {
     setTimeout(() => {
       this.props.getTweets();
-    }, 2000);
+    }, 1500);
   };
   // image
   handleImageInput = (e) => {
@@ -184,6 +186,7 @@ export class Feed extends Component {
     return (
       <>
         <Container id="feed">
+          <div class="alan-btn"></div>
           <div id="createTweet">
             <div>
               <p>Home</p>
@@ -421,4 +424,4 @@ export class Feed extends Component {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feed);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Feed));
