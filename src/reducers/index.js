@@ -26,7 +26,16 @@ export default function (state = {}, action) {
           ...state.tweets.slice(postToRemove + 1),
         ],
       };
-
+    case "GET_USERS":
+      return {
+        ...state,
+        users: action.payload,
+      };
+    case "SEARCH_USER":
+      return {
+        ...state,
+        searchUsername: action.payload,
+      };
     default:
       return state;
   }
