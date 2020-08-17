@@ -74,7 +74,7 @@ export class MyTweets extends Component {
               <div className="tweet">
                 <img
                   className="img-fluid"
-                  src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg"
+                  src={`data:image/jpeg;base64,${tweet.user.image}`}
                   alt=""
                 />
                 <div className="content">

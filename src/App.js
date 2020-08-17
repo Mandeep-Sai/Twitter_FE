@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Home from "./components/Home/Home";
 import Profile from "./components/ProfilePage/Profile";
 import Lists from "./components/Lists/Lists";
+import Bookmarks from "./components/Bookmarks/Bookmarks";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { connect } from "react-redux";
 
@@ -75,6 +76,7 @@ class App extends React.Component {
         <Route path="/home/:username" exact component={Home} />
         <Route path="/userinfo/:username" exact component={Profile} />
         <Route path="/:username/lists" exact component={Lists} />
+        <Route path="/:username/bookmarks" exact component={Bookmarks} />
       </Router>
     );
   }

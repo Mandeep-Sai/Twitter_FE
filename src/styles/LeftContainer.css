@@ -39,9 +39,14 @@
   font-size: 32px;
   margin-left: auto;
 }
+#leftBar > #profile {
+  margin: 0px;
+  padding: 0px;
+}
 #leftBar > #profile img {
-  height: 36px;
-  width: 36px;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
 }
 .ReactModal__Content {
   padding: 0px !important;

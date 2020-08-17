@@ -123,8 +123,11 @@ class LeftContainer extends React.Component {
         <div>
           <FiMail />
         </div>
-        <div>
-          <FiBookmark />
+        <div className={this.props.active === "bookmarks" ? "active" : null}>
+          <Link to={`/${this.props.username}/bookmarks`}>
+            {" "}
+            <FiBookmark />
+          </Link>
         </div>
         <div className={this.props.active === "lists" ? "active" : null}>
           <Link to={`/${this.props.username}/lists`}>
@@ -143,10 +146,7 @@ class LeftContainer extends React.Component {
           <RiQuillPenLine />
         </div>
         <div id="profile" onClick={() => this.setState({ showLogout: true })}>
-          <img
-            src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
-            alt=""
-          />
+          <img src={`data:image/jpeg;base64,${this.props.user.image}`} alt="" />
         </div>
         {/* Create tweet Modal */}
         <Modal
@@ -176,7 +176,7 @@ class LeftContainer extends React.Component {
             <hr style={{ marginTop: "0.3rem", marginBottom: "0.5rem" }} />
             <div id="content">
               <img
-                src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
+                src={`data:image/jpeg;base64,${this.props.user.image}`}
                 alt=""
               />
               <textarea

@@ -55,6 +55,9 @@
   border: 2px solid #1da1f2;
   border-radius: 20px;
 }
+#profile #image button:focus {
+  outline: none;
+}
 #profile #info {
   padding: 10px;
 }
@@ -129,4 +132,87 @@
   color: white;
   font-weight: 650;
   width: 200px;
+}
+
+#editProfile p {
+  margin: 0px;
+}
+#editProfile #heading {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+#editProfile #heading div:first-of-type {
+  display: flex;
+}
+#editProfile #heading div:first-of-type svg {
+  font-size: 20px;
+  margin-top: 6px;
+}
+#editProfile #heading div:first-of-type svg:hover {
+  cursor: pointer;
+}
+#editProfile #heading div:first-of-type p {
+  font-size: 20px;
+  font-weight: 650;
+  margin-left: 15px;
+}
+#editProfile #heading button {
+  height: 35px;
+  background-color: #1da1f2;
+  width: 80px;
+  border: none;
+  border-radius: 20px;
+  color: white;
+}
+#editProfile #heading button:focus {
+  outline: none !important;
+}
+#editProfile #bgImage {
+  background-color: #657786;
+  width: 100%;
+  height: 20vh;
+}
+#editProfile #image {
+  display: flex;
+  justify-content: flex-end;
+}
+#editProfile #image img {
+  position: absolute;
+  top: 22vh;
+  left: 35px;
+  height: 100px;
+  width: 100px;
+  border-radius: 70px;
+  border: 3px solid white;
+}
+#editProfile #info {
+  margin-top: 35px;
+  padding: 10px;
+}
+#editProfile .inputDivs {
+  height: 60px;
+  margin-top: 20px;
+  padding: 5px;
+  background-color: #f5f8fa;
+  border-bottom: 2px solid #657786;
+}
+#editProfile .inputDivs p {
+  margin: 0;
+  margin-left: 5px;
+  color: #657786;
+}
+#editProfile .inputDivs input {
+  font-size: 18px;
+  border: none;
+  background-color: #f5f8fa !important;
+  width: 100%;
+}
+#editProfile .inputDivs input:active {
+  outline: none !important;
+  background-color: #f5f8fa !important;
+}
+#editProfile .inputDivs input:focus {
+  outline: none !important;
+  background-color: #f5f8fa !important;
 }

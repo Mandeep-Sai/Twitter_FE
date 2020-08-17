@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import "../../styles/Feed.css";
-import { Container, Dropdown, Form } from "react-bootstrap";
+import { Container, Dropdown, Form, Spinner } from "react-bootstrap";
 import { WiStars } from "react-icons/wi";
 import {
   AiOutlinePicture,
@@ -94,15 +94,16 @@ export class Feed extends Component {
       showDelete: false,
       showEdit: false,
       selectedTweet: "",
+      loading: true,
     };
-    this.alanBtnInstance = null;
     this.inputRef = React.createRef();
   }
 
   componentDidMount = async () => {
+    this.props.getTweets();
     setTimeout(() => {
-      this.props.getTweets();
-    }, 1500);
+      this.setState({ loading: false });
+    }, 500);
   };
   // image
   handleImageInput = (e) => {
@@ -185,240 +186,246 @@ export class Feed extends Component {
   render() {
     return (
       <>
-        <Container id="feed">
-          <div class="alan-btn"></div>
-          <div id="createTweet">
-            <div>
-              <p>Home</p>
+        {this.state.loading ? (
+          <Spinner animation="border" variant="primary" />
+        ) : (
+          <Container id="feed">
+            <div class="alan-btn"></div>
+            <div id="createTweet">
+              <div>
+                <p>Home</p>
 
-              <WiStars />
-            </div>
-            <hr style={{ margin: "0.5rem" }} />
-            <div id="tweetingSection">
-              <img
-                src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
-                alt=""
-              />
-              <input
-                id="text"
-                onChange={this.tweetHandler}
-                placeholder="What's happening?"
-                value={this.state.tweet.text}
-                type="text"
-              />
-            </div>
-            <div id="icons">
-              <div>
-                <AiOutlinePicture onClick={this.handleImageInput} />
-                <input
-                  ref={this.inputRef}
-                  style={{ display: "none" }}
-                  type="file"
-                  name="picture"
-                  onChange={this.imageSelected}
-                />
-                <AiOutlineFileGif />
-                <FiBarChart />
-                <FaRegSmile />
-                <GoCalendar />
+                <WiStars />
               </div>
-              <div>
-                <button onClick={this.sendTweet}>Tweet</button>
-              </div>
-            </div>
-          </div>
-          <hr
-            style={{ margin: "0px", borderTop: "15px solid rgba(0,0,0,0.1)" }}
-          />
-          {this.props.tweets.map((tweet) => {
-            return (
-              <div className="tweet">
+              <hr style={{ margin: "0.5rem" }} />
+              <div id="tweetingSection">
                 <img
-                  className="img-fluid"
-                  src="https://image.shutterstock.com/image-photo/bright-spring-view-cameo-island-260nw-1048185397.jpg"
+                  src={`data:image/jpeg;base64,${this.props.user.image}`}
                   alt=""
                 />
-                <div className="content">
-                  <div className="name">
-                    <div>
-                      <p style={{ fontSize: "18px", fontWeight: "700" }}>
-                        {tweet.user.name}{" "}
-                        <span style={{ fontWeight: "400", color: "#9AA5AF" }}>
-                          @{tweet.user.username}
-                        </span>
-                      </p>
-
-                      <Dropdown>
-                        <Dropdown.Toggle className="d-flex">
-                          <div
-                            className="dropdown"
-                            onClick={() =>
-                              this.setState({ showDropdown: true })
-                            }
-                          >
-                            <MdKeyboardArrowDown />
-                          </div>
-                        </Dropdown.Toggle>
-
-                        {tweet.user.username === this.props.user.username ? (
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              onClick={() =>
-                                this.setState({
-                                  showEdit: true,
-                                  selectedTweet: tweet,
-                                })
-                              }
-                            >
-                              Edit Tweet
-                            </Dropdown.Item>
-                            <Dropdown.Item
-                              onClick={() =>
-                                this.setState({
-                                  showDelete: true,
-                                  selectedTweet: tweet,
-                                })
-                              }
-                            >
-                              Delete Tweet
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        ) : (
-                          <Dropdown.Menu>
-                            <Dropdown.Item>
-                              Not interested in this Tweet
-                            </Dropdown.Item>
-
-                            <Dropdown.Item>
-                              Unfollow @{tweet.user.username}
-                            </Dropdown.Item>
-                            <Dropdown.Item>Add/remove from Lists</Dropdown.Item>
-                            <Dropdown.Item>
-                              Mute @{tweet.user.username}
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              Block @{tweet.user.username}
-                            </Dropdown.Item>
-                            <Dropdown.Item>Embed Tweet</Dropdown.Item>
-                            <Dropdown.Item>Report Tweet</Dropdown.Item>
-                          </Dropdown.Menu>
-                        )}
-                      </Dropdown>
-                    </div>
-                    <p style={{ fontSize: "16px" }}>{tweet.text}</p>
-                  </div>
-                  {tweet.image ? (
-                    <img
-                      className="img-fluid"
-                      src={`data:image/jpeg;base64,${tweet.image}`}
-                      alt=""
-                    />
-                  ) : null}
-                  <div className="icons">
-                    <p>
-                      <BsChat />{" "}
-                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                        7
-                      </span>
-                    </p>
-                    <p>
-                      <AiOutlineRetweet />{" "}
-                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                        7
-                      </span>
-                    </p>
-                    <p>
-                      <AiOutlineHeart />{" "}
-                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                        7
-                      </span>
-                    </p>
-                    <p>
-                      <FiUpload />{" "}
-                      <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                        7
-                      </span>
-                    </p>
-                  </div>
+                <input
+                  id="text"
+                  onChange={this.tweetHandler}
+                  placeholder="What's happening?"
+                  value={this.state.tweet.text}
+                  type="text"
+                />
+              </div>
+              <div id="icons">
+                <div>
+                  <AiOutlinePicture onClick={this.handleImageInput} />
+                  <input
+                    ref={this.inputRef}
+                    style={{ display: "none" }}
+                    type="file"
+                    name="picture"
+                    onChange={this.imageSelected}
+                  />
+                  <AiOutlineFileGif />
+                  <FiBarChart />
+                  <FaRegSmile />
+                  <GoCalendar />
+                </div>
+                <div>
+                  <button onClick={this.sendTweet}>Tweet</button>
                 </div>
               </div>
-            );
-          })}
-          {/* Modals */}
-          <Modal
-            isOpen={this.state.showDelete}
-            onRequestClose={() =>
-              this.setState({ showDelete: false, selectedTweet: "" })
-            }
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <div id="deleteTweet">
-              <div id="heading">
-                <h2>Are you sure ?</h2>
-              </div>
-              <div id="buttons">
-                <button
-                  onClick={() => {
-                    this.props.removeTweet(this.state.selectedTweet);
-                    this.setState({ showDelete: false, selectedTweet: "" });
-                  }}
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={() =>
-                    this.setState({ showDelete: false, selectedTweet: "" })
-                  }
-                >
-                  Close
-                </button>
-              </div>
             </div>
-          </Modal>
-          {/* edit modal */}
-          <Modal
-            isOpen={this.state.showEdit}
-            onRequestClose={() =>
-              this.setState({ showEdit: false, selectedTweet: "" })
-            }
-            style={customStyles}
-            contentLabel="Example Modal"
-          >
-            <div id="editTweet">
-              <div id="heading">
-                <h2>Edit your tweet</h2>
+            <hr
+              style={{ margin: "0px", borderTop: "15px solid rgba(0,0,0,0.1)" }}
+            />
+            {this.props.tweets.map((tweet) => {
+              return (
+                <div className="tweet">
+                  <img
+                    className="img-fluid"
+                    src={`data:image/jpeg;base64,${tweet.user.image}`}
+                    alt=""
+                  />
+                  <div className="content">
+                    <div className="name">
+                      <div>
+                        <p style={{ fontSize: "18px", fontWeight: "700" }}>
+                          {tweet.user.name}{" "}
+                          <span style={{ fontWeight: "400", color: "#9AA5AF" }}>
+                            @{tweet.user.username}
+                          </span>
+                        </p>
+
+                        <Dropdown>
+                          <Dropdown.Toggle className="d-flex">
+                            <div
+                              className="dropdown"
+                              onClick={() =>
+                                this.setState({ showDropdown: true })
+                              }
+                            >
+                              <MdKeyboardArrowDown />
+                            </div>
+                          </Dropdown.Toggle>
+
+                          {tweet.user.username === this.props.user.username ? (
+                            <Dropdown.Menu>
+                              <Dropdown.Item
+                                onClick={() =>
+                                  this.setState({
+                                    showEdit: true,
+                                    selectedTweet: tweet,
+                                  })
+                                }
+                              >
+                                Edit Tweet
+                              </Dropdown.Item>
+                              <Dropdown.Item
+                                onClick={() =>
+                                  this.setState({
+                                    showDelete: true,
+                                    selectedTweet: tweet,
+                                  })
+                                }
+                              >
+                                Delete Tweet
+                              </Dropdown.Item>
+                            </Dropdown.Menu>
+                          ) : (
+                            <Dropdown.Menu>
+                              <Dropdown.Item>
+                                Not interested in this Tweet
+                              </Dropdown.Item>
+
+                              <Dropdown.Item>
+                                Unfollow @{tweet.user.username}
+                              </Dropdown.Item>
+                              <Dropdown.Item>
+                                Add/remove from Lists
+                              </Dropdown.Item>
+                              <Dropdown.Item>
+                                Mute @{tweet.user.username}
+                              </Dropdown.Item>
+                              <Dropdown.Item>
+                                Block @{tweet.user.username}
+                              </Dropdown.Item>
+                              <Dropdown.Item>Embed Tweet</Dropdown.Item>
+                              <Dropdown.Item>Report Tweet</Dropdown.Item>
+                            </Dropdown.Menu>
+                          )}
+                        </Dropdown>
+                      </div>
+                      <p style={{ fontSize: "16px" }}>{tweet.text}</p>
+                    </div>
+                    {tweet.image ? (
+                      <img
+                        className="img-fluid"
+                        src={`data:image/jpeg;base64,${tweet.image}`}
+                        alt=""
+                      />
+                    ) : null}
+                    <div className="icons">
+                      <p>
+                        <BsChat />{" "}
+                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                          7
+                        </span>
+                      </p>
+                      <p>
+                        <AiOutlineRetweet />{" "}
+                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                          7
+                        </span>
+                      </p>
+                      <p>
+                        <AiOutlineHeart />{" "}
+                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                          7
+                        </span>
+                      </p>
+                      <p>
+                        <FiUpload />{" "}
+                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                          7
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+            {/* Modals */}
+            <Modal
+              isOpen={this.state.showDelete}
+              onRequestClose={() =>
+                this.setState({ showDelete: false, selectedTweet: "" })
+              }
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div id="deleteTweet">
+                <div id="heading">
+                  <h2>Are you sure ?</h2>
+                </div>
+                <div id="buttons">
+                  <button
+                    onClick={() => {
+                      this.props.removeTweet(this.state.selectedTweet);
+                      this.setState({ showDelete: false, selectedTweet: "" });
+                    }}
+                  >
+                    Confirm
+                  </button>
+                  <button
+                    onClick={() =>
+                      this.setState({ showDelete: false, selectedTweet: "" })
+                    }
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-              <div id="content">
-                <textarea
-                  type="text"
-                  value={this.state.tweet.text}
-                  onChange={this.tweetHandler}
-                  placeholder="tweet"
-                  id="text"
-                />
-                <input type="file" onChange={this.imageSelected} />
+            </Modal>
+            {/* edit modal */}
+            <Modal
+              isOpen={this.state.showEdit}
+              onRequestClose={() =>
+                this.setState({ showEdit: false, selectedTweet: "" })
+              }
+              style={customStyles}
+              contentLabel="Example Modal"
+            >
+              <div id="editTweet">
+                <div id="heading">
+                  <h2>Edit your tweet</h2>
+                </div>
+                <div id="content">
+                  <textarea
+                    type="text"
+                    value={this.state.tweet.text}
+                    onChange={this.tweetHandler}
+                    placeholder="tweet"
+                    id="text"
+                  />
+                  <input type="file" onChange={this.imageSelected} />
+                </div>
+                <div id="buttons">
+                  <button
+                    onClick={() => {
+                      this.editTweet();
+                      this.setState({ showEdit: false });
+                    }}
+                  >
+                    Update
+                  </button>
+                  <button
+                    onClick={() =>
+                      this.setState({ showEdit: false, selectedTweet: "" })
+                    }
+                  >
+                    Close
+                  </button>
+                </div>
               </div>
-              <div id="buttons">
-                <button
-                  onClick={() => {
-                    this.editTweet();
-                    this.setState({ showEdit: false });
-                  }}
-                >
-                  Update
-                </button>
-                <button
-                  onClick={() =>
-                    this.setState({ showEdit: false, selectedTweet: "" })
-                  }
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </Modal>
-        </Container>
+            </Modal>
+          </Container>
+        )}
       </>
     );
   }

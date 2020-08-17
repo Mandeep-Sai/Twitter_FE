@@ -32,6 +32,7 @@
   margin: 0px 10px;
   border: none;
   font-size: 24px;
+  width: 80%;
 }
 #createTweet #tweetingSection input:focus {
   outline: none;
@@ -221,4 +222,9 @@
 #deleteTweet #buttons button:first-of-type:focus,
 #deleteTweet #buttons button:nth-of-type(2):focus {
   outline: none;
+}
+.spinner-border {
+  position: absolute;
+  top: 40%;
+  color: #1da1f2 !important;
 }
