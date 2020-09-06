@@ -31,8 +31,27 @@ export class Login extends Component {
   };
 
   loginHandler = async () => {
-    this.props.setUser(this.state.user.username);
-    this.props.history.push(`/home/${this.state.user.username}`);
+    let response = await fetch("http://localhost:3003/profiles/login", {
+      headers: new Headers({
+        "content-type": "application/json",
+      }),
+      credentials: "include",
+      method: "POST",
+      body: JSON.stringify(this.state.user),
+    });
+    if (response.ok) {
+      //  const parsedResponse = await response.json();
+      // localStorage.setItem("token", parsedResponse.jwt);
+      // this.props.history.push("/me");
+      // console.log(parsedResponse);
+      this.props.setUser(this.state.user.username);
+      setTimeout(() => {
+        this.props.history.push(`/home/${this.state.user.username}`);
+      }, 2000);
+      // this.props.history.push(`/home`);
+    } else {
+      alert("Error");
+    }
   };
   render() {
     return (

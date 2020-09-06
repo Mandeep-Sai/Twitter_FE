@@ -207,6 +207,7 @@
 }
 #deleteTweet #buttons {
   padding: 15px;
+  margin-left: 25% !important;
 }
 #deleteTweet #buttons button:first-of-type,
 #deleteTweet #buttons button:nth-of-type(2) {

@@ -37,7 +37,14 @@ const bufferToBase64 = (buf) => {
 };
 const fetchTweets = () => {
   return async (dispatch, getState) => {
-    let response = await fetch("http://localhost:3003/tweets");
+    let response = await fetch("http://localhost:3003/tweets", {
+      method: "GET",
+      credentials: "include",
+      headers: new Headers({
+        "Access-Control-Allow-Credentials": "true",
+        "Content-Type": "application/json",
+      }),
+    });
     let tweets = await response.json();
     tweets.forEach((tweet) => {
       if (tweet.image) {
@@ -95,6 +102,9 @@ export class Feed extends Component {
       showEdit: false,
       selectedTweet: "",
       loading: true,
+      newTweet: {
+        text: "",
+      },
     };
     this.inputRef = React.createRef();
   }
@@ -124,16 +134,22 @@ export class Feed extends Component {
     tweet[id] = e.currentTarget.value;
     this.setState({ tweet });
   };
+  editTweetHandler = (e) => {
+    let newTweet = this.state.newTweet;
+    let id = e.currentTarget.id;
+    newTweet[id] = e.currentTarget.value;
+    this.setState({ newTweet });
+  };
   sendTweet = async () => {
     //
     let tweet = {
       method: "POST",
       url: await `http://localhost:3003/tweets`,
       headers: {
-        username: this.props.user.username,
         "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
       },
       data: this.state.tweet,
+      withCredentials: true,
     };
     let tweetResponse = await axios(tweet);
     let tweetId = tweetResponse.data;
@@ -157,10 +173,10 @@ export class Feed extends Component {
       method: "PUT",
       url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
       headers: {
-        username: this.props.user.username,
         "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
       },
-      data: this.state.tweet,
+      data: this.state.newTweet,
+      withCredentials: true,
     };
 
     let tweetResponse = await axios(editTweet);
@@ -271,6 +287,7 @@ export class Feed extends Component {
                                   this.setState({
                                     showEdit: true,
                                     selectedTweet: tweet,
+                                    newTweet: { text: tweet.text },
                                   })
                                 }
                               >
@@ -398,9 +415,9 @@ export class Feed extends Component {
                 <div id="content">
                   <textarea
                     type="text"
-                    value={this.state.tweet.text}
-                    onChange={this.tweetHandler}
-                    placeholder="tweet"
+                    placeholder={this.state.selectedTweet.text}
+                    onChange={this.editTweetHandler}
+                    //  placeholder="tweet"
                     id="text"
                   />
                   <input type="file" onChange={this.imageSelected} />

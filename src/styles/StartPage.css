@@ -98,7 +98,7 @@
   font-weight: 600;
 }
 #main #rightColumn #content > div #buttons button:focus {
-  outline: none;
+  outline: none !important;
 }
 #main #rightColumn #content > div #buttons button:first-of-type {
   color: white;
@@ -135,6 +135,9 @@
   border: none;
   border-radius: 20px;
 }
+#registerModal #logo button:focus {
+  outline: none !important;
+}
 #registerModal #info {
   padding: 10px 20px;
 }
@@ -163,6 +166,7 @@
   border: none;
   background-color: #f5f8fa !important;
   width: 100%;
+  padding-left: 5px;
 }
 #registerModal #info .inputDivs input:active {
   outline: none !important;

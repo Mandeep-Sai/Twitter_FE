@@ -47,7 +47,7 @@ class StartPage extends React.Component {
   };
   registerUser = async (e) => {
     e.preventDefault();
-    let response = await fetch("http://localhost:3003/profiles", {
+    let response = await fetch("http://localhost:3003/profiles/register", {
       method: "POST",
       body: JSON.stringify(this.state.info),
       headers: new Headers({
@@ -160,7 +160,7 @@ class StartPage extends React.Component {
           <div id="registerModal">
             <form>
               <div id="logo">
-                <div></div>
+                <div style={{ width: "70px" }}></div>
                 <div>
                   <img
                     src="https://upload.wikimedia.org/wikipedia/de/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"
