@@ -40,15 +40,10 @@ export class Login extends Component {
       body: JSON.stringify(this.state.user),
     });
     if (response.ok) {
-      //  const parsedResponse = await response.json();
-      // localStorage.setItem("token", parsedResponse.jwt);
-      // this.props.history.push("/me");
-      // console.log(parsedResponse);
       this.props.setUser(this.state.user.username);
       setTimeout(() => {
-        this.props.history.push(`/home/${this.state.user.username}`);
-      }, 2000);
-      // this.props.history.push(`/home`);
+        this.props.history.push(`/home/me`);
+      }, 1000);
     } else {
       alert("Error");
     }

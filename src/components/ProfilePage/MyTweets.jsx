@@ -51,18 +51,33 @@ export class MyTweets extends Component {
     };
   }
   componentDidMount = () => {
-    let tweets = this.props.tweets.filter(
-      (tweet) => tweet.user.username === this.props.userId
-    );
-    this.setState({ tweets });
-  };
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.userId !== this.props.userId) {
+    if (this.props.userId === "me") {
+      let tweets = this.props.tweets.filter(
+        (tweet) => tweet.user.username === this.props.user.username
+      );
+      this.setState({ tweets });
+    } else {
       let tweets = this.props.tweets.filter(
         (tweet) => tweet.user.username === this.props.userId
       );
-
       this.setState({ tweets });
+    }
+  };
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.userId !== this.props.userId) {
+      let tweets;
+      if (this.props.userId === "me") {
+        tweets = this.props.tweets.filter(
+          (tweet) => tweet.user.username === this.props.user.username
+        );
+      } else {
+        tweets = this.props.tweets.filter(
+          (tweet) => tweet.user.username === this.props.userId
+        );
+      }
+      setTimeout(() => {
+        this.setState({ tweets });
+      }, 1000);
     }
   };
   render() {

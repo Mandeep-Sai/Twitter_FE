@@ -110,7 +110,7 @@ class LeftContainer extends React.Component {
           />
         </div>
         <div className={this.props.active === "home" ? "active" : null}>
-          <Link to={`/home/${this.props.username}`}>
+          <Link to={`/home/me`}>
             <GoHome />
           </Link>
         </div>
@@ -135,7 +135,7 @@ class LeftContainer extends React.Component {
           </Link>
         </div>
         <div className={this.props.active === "userInfo" ? "active" : null}>
-          <Link to={`/userinfo/${this.props.username}`}>
+          <Link to={`/userinfo/me`}>
             <AiOutlineUser />
           </Link>
         </div>

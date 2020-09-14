@@ -17,6 +17,17 @@ import Modal from "react-modal";
 
 const mapStateToProps = (state) => state;
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getUser: (user) => {
+      dispatch({
+        type: "GET_USERINFO",
+        payload: user,
+      });
+    },
+  };
+};
+
 const customStyles = {
   content: {
     top: "50%",
@@ -51,24 +62,30 @@ export class Profile extends Component {
     return btoa(binstr);
   };
   componentDidMount = async () => {
-    let response = await fetch(
-      `http://localhost:3003/profiles/${this.state.user}`
-    );
-    let userInfo = await response.json();
-    const profileBase64 = this.bufferToBase64(userInfo.image.data);
-    userInfo["image"] = profileBase64;
-    this.setState({ userInfo });
+    if (this.props.match.params.username === "me") {
+      this.setState({ userInfo: this.props.user });
+    } else {
+      let userInfo = this.props.users.filter(
+        (user) => user.username === this.props.match.params.username
+      );
+      const profileBase64 = this.bufferToBase64(userInfo[0].image.data);
+      userInfo[0]["image"] = profileBase64;
+      this.setState({ userInfo: userInfo[0] });
+    }
   };
   componentDidUpdate = async (prevProps) => {
     if (prevProps.match.params.username !== this.props.match.params.username) {
       this.setState({ user: this.props.match.params.username });
-      let response = await fetch(
-        `http://localhost:3003/profiles/${this.props.match.params.username}`
-      );
-      let userInfo = await response.json();
-      const profileBase64 = this.bufferToBase64(userInfo.image.data);
-      userInfo["image"] = profileBase64;
-      this.setState({ userInfo });
+      if (this.props.match.params.username === "me") {
+        this.setState({ userInfo: this.props.user });
+      } else {
+        let userInfo = this.props.users.filter(
+          (user) => user.username === this.props.match.params.username
+        );
+        const profileBase64 = this.bufferToBase64(userInfo[0].image.data);
+        userInfo[0]["image"] = profileBase64;
+        this.setState({ userInfo: userInfo[0] });
+      }
     }
   };
   updateInfo = (e) => {
@@ -92,28 +109,42 @@ export class Profile extends Component {
     e.preventDefault();
     let editInfo = {
       method: "PUT",
-      url: await `http://localhost:3003/profiles/${this.state.userInfo._id}`,
+      url: await `http://localhost:3003/profiles/me`,
       headers: {
         username: this.props.user.username,
         "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
       },
       data: this.state.userInfo,
+      withCredentials: true,
     };
 
     let tweetResponse = await axios(editInfo);
-    let userImage = {
-      method: "POST",
-      url: await `http://localhost:3003/profiles/${this.state.userInfo._id}/uploadImage`,
-      headers: {
-        username: this.props.user.username,
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
-      },
-      data: this.state.image,
-    };
-    let userImageResponse = await axios(userImage);
-    console.log(userImageResponse);
+    if (this.state.image !== null) {
+      let userImage = {
+        method: "POST",
+        url: await `http://localhost:3003/profiles/${this.state.userInfo._id}/uploadImage`,
+        headers: {
+          username: this.props.user.username,
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
+        },
+        data: this.state.image,
+
+        withCredentials: true,
+      };
+      let userImageResponse = await axios(userImage);
+    }
+    let response = await fetch(`http://localhost:3003/profiles/me`, {
+      method: "GET",
+      credentials: "include",
+    });
+    let user = await response.json();
+    user.image = this.bufferToBase64(user.image.data);
+    if (response.ok) {
+      this.setState({ user });
+      this.props.getUser(this.state.user);
+    }
     alert("changed sucessfully");
-    this.setState({ userInfo: null, showEdit: false });
+    this.setState({ showEdit: false });
   };
   render() {
     return (
@@ -282,4 +313,4 @@ export class Profile extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

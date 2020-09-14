@@ -14,11 +14,6 @@ import { connect } from "react-redux";
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {
-    getUsers: (users) =>
-      dispatch({
-        type: "GET_USERS",
-        payload: users,
-      }),
     searchUser: (username) =>
       dispatch({
         type: "SEARCH_USER",
@@ -38,10 +33,6 @@ class App extends React.Component {
   }
 
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3003/profiles`);
-    let users = await response.json();
-    this.props.getUsers(users);
-
     alanBtn({
       key: alanKey,
       onCommand: ({ command, username }) => {
@@ -73,7 +64,7 @@ class App extends React.Component {
       <Router>
         <Route path="/" exact component={StartPage} />
         <Route path="/login" exact component={Login} />
-        <Route path="/home/:username" exact component={Home} />
+        <Route path="/home/me" exact component={Home} />
         <Route path="/userinfo/:username" exact component={Profile} />
         <Route path="/:username/lists" exact component={Lists} />
         <Route path="/:username/bookmarks" exact component={Bookmarks} />

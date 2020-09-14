@@ -56,10 +56,11 @@ const fetchTweets = () => {
         tweet.user.image = profilebase64;
       }
     });
+    let latestTweets = tweets.reverse();
     if (response.ok) {
       dispatch({
         type: "GET_TWEETS",
-        payload: tweets,
+        payload: latestTweets,
       });
     }
   };
