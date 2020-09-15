@@ -243,8 +243,14 @@ export class Feed extends Component {
                   <FaRegSmile />
                   <GoCalendar />
                 </div>
+
                 <div>
-                  <button onClick={this.sendTweet}>Tweet</button>
+                  <button
+                    disabled={this.state.tweet.text.length === 0}
+                    onClick={this.sendTweet}
+                  >
+                    Tweet
+                  </button>
                 </div>
               </div>
             </div>

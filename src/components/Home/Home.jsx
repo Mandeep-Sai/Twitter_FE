@@ -41,19 +41,7 @@ export class Home extends Component {
     return btoa(binstr);
   };
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3003/profiles/me`, {
-      method: "GET",
-      credentials: "include",
-    });
-    let user = await response.json();
-    user.image = this.bufferToBase64(user.image.data);
-    if (response.ok) {
-      this.setState({ user });
-      this.props.getUser(this.state.user);
-    }
-    let usersResponse = await fetch(`http://localhost:3003/profiles`);
-    let users = await usersResponse.json();
-    this.props.getUsers(users);
+    this.setState({ user: this.props.user });
   };
 
   render() {

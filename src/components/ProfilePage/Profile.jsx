@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import LeftContainer from "../LeftContainer";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import RightContainer from "../RightContainer";
 import "../../styles/Profile.css";
 import { BsArrowLeft, BsCalendar } from "react-icons/bs";
@@ -63,13 +63,14 @@ export class Profile extends Component {
   };
   componentDidMount = async () => {
     if (this.props.match.params.username === "me") {
-      this.setState({ userInfo: this.props.user });
+      setTimeout(() => {
+        this.setState({ userInfo: this.props.user });
+      }, 500);
     } else {
       let userInfo = this.props.users.filter(
         (user) => user.username === this.props.match.params.username
       );
-      const profileBase64 = this.bufferToBase64(userInfo[0].image.data);
-      userInfo[0]["image"] = profileBase64;
+
       this.setState({ userInfo: userInfo[0] });
     }
   };
@@ -82,8 +83,7 @@ export class Profile extends Component {
         let userInfo = this.props.users.filter(
           (user) => user.username === this.props.match.params.username
         );
-        const profileBase64 = this.bufferToBase64(userInfo[0].image.data);
-        userInfo[0]["image"] = profileBase64;
+
         this.setState({ userInfo: userInfo[0] });
       }
     }
@@ -150,100 +150,109 @@ export class Profile extends Component {
     return (
       <Container id="profile">
         <div>
+          {/*
           {this.state.user === this.props.username ? (
             <LeftContainer active="userInfo" />
-          ) : (
-            <LeftContainer />
-          )}
+            ) : (
+              <LeftContainer />
+            )} */}
+          <LeftContainer active="userInfo" />
         </div>
         <div>
-          <Container id="userInfo">
-            <div id="navBar">
-              <div>
-                <BsArrowLeft />
+          {!this.state.userInfo ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
+            <Container id="userInfo">
+              <div id="navBar">
+                <div>
+                  <BsArrowLeft />
+                </div>
+                <div id="name">
+                  <p>{this.state.userInfo.name}</p>
+                  <p>tweets length</p>
+                </div>
               </div>
-              <div id="name">
+              <div id="bgImage"></div>
+              <div id="image">
+                <img
+                  src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
+                  alt=""
+                />
+                {this.state.userInfo.username === this.props.username ? (
+                  <button onClick={() => this.setState({ showEdit: true })}>
+                    Edit Profile
+                  </button>
+                ) : (
+                  <button>Follow</button>
+                )}
+              </div>
+              <div id="info">
                 <p>{this.state.userInfo.name}</p>
-                <p>tweets length</p>
-              </div>
-            </div>
-            <div id="bgImage"></div>
-            <div id="image">
-              <img
-                src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
-                alt=""
-              />
-              {this.state.userInfo.username === this.props.username ? (
-                <button onClick={() => this.setState({ showEdit: true })}>
-                  Edit Profile
-                </button>
-              ) : (
-                <button>Follow</button>
-              )}
-            </div>
-            <div id="info">
-              <p>{this.state.userInfo.name}</p>
-              <p>@{this.state.userInfo.username}</p>
-              <div id="dates">
-                {this.state.userInfo.area ? (
+                <p>@{this.state.userInfo.username}</p>
+                <div id="dates">
+                  {this.state.userInfo.area ? (
+                    <p>
+                      <FiMapPin /> {this.state.userInfo.area}
+                    </p>
+                  ) : null}
+                  {this.state.userInfo.dob ? (
+                    <p>
+                      <GiBalloons /> {this.state.userInfo.dob}
+                    </p>
+                  ) : null}
+                  {this.state.userInfo.createdAt ? (
+                    <p>
+                      <BsCalendar />{" "}
+                      {this.state.userInfo.createdAt.slice(0, 10)}
+                    </p>
+                  ) : null}
+                </div>
+                <div id="followers">
                   <p>
-                    <FiMapPin /> {this.state.userInfo.area}
+                    <span style={{ fontWeight: "650", color: "black" }}>7</span>{" "}
+                    Following
                   </p>
-                ) : null}
-                {this.state.userInfo.dob ? (
                   <p>
-                    <GiBalloons /> {this.state.userInfo.dob}
+                    <span style={{ fontWeight: "650", color: "black" }}>
+                      7B
+                    </span>{" "}
+                    Followers
                   </p>
-                ) : null}
-                {this.state.userInfo.createdAt ? (
-                  <p>
-                    <BsCalendar /> {this.state.userInfo.createdAt.slice(0, 10)}
-                  </p>
-                ) : null}
+                </div>
               </div>
-              <div id="followers">
-                <p>
-                  <span style={{ fontWeight: "650", color: "black" }}>7</span>{" "}
-                  Following
-                </p>
-                <p>
-                  <span style={{ fontWeight: "650", color: "black" }}>7B</span>{" "}
-                  Followers
-                </p>
+              <div id="myTweets">
+                <div
+                  onClick={() => this.setState({ active: "tweets" })}
+                  className={this.state.active === "tweets" ? "active" : null}
+                >
+                  Tweets
+                </div>
+                <div
+                  onClick={() => this.setState({ active: "replies" })}
+                  className={this.state.active === "replies" ? "active" : null}
+                >
+                  Tweets & replies
+                </div>
+                <div
+                  onClick={() => this.setState({ active: "media" })}
+                  className={this.state.active === "media" ? "active" : null}
+                >
+                  Media
+                </div>
+                <div
+                  onClick={() => this.setState({ active: "likes" })}
+                  className={this.state.active === "likes" ? "active" : null}
+                >
+                  Likes
+                </div>
               </div>
-            </div>
-            <div id="myTweets">
-              <div
-                onClick={() => this.setState({ active: "tweets" })}
-                className={this.state.active === "tweets" ? "active" : null}
-              >
-                Tweets
-              </div>
-              <div
-                onClick={() => this.setState({ active: "replies" })}
-                className={this.state.active === "replies" ? "active" : null}
-              >
-                Tweets & replies
-              </div>
-              <div
-                onClick={() => this.setState({ active: "media" })}
-                className={this.state.active === "media" ? "active" : null}
-              >
-                Media
-              </div>
-              <div
-                onClick={() => this.setState({ active: "likes" })}
-                className={this.state.active === "likes" ? "active" : null}
-              >
-                Likes
-              </div>
-            </div>
-            {this.state.active === "tweets" ? (
-              <MyTweets userId={this.state.user} />
-            ) : null}
-            {this.state.active === "media" ? <Media /> : null}
-            {this.state.active === "likes" ? <Likes /> : null}
-          </Container>
+              {this.state.active === "tweets" ? (
+                <MyTweets userId={this.state.user} />
+              ) : null}
+              {this.state.active === "media" ? <Media /> : null}
+              {this.state.active === "likes" ? <Likes /> : null}
+            </Container>
+          )}
         </div>
         <div>
           <RightContainer />

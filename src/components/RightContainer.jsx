@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { FiSearch, FiSettings } from "react-icons/fi";
 import "../styles/RightContainer.css";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
 
 export class RightContainer extends Component {
   constructor(props) {
@@ -49,7 +52,7 @@ export class RightContainer extends Component {
                 this.state.filteredUsers.map((user) => {
                   return (
                     <>
-                      <Link to={`/userInfo/${user.username}`}>
+                      <Link to={`/userinfo/${user.username}`}>
                         <p onClick={this.resetAll}>{user.name}</p>
                       </Link>
                     </>
@@ -102,20 +105,28 @@ export class RightContainer extends Component {
               <p>Who to follow</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
-            <div id="follow">
-              <div>
-                <img
-                  src="https://w7.pngwing.com/pngs/745/539/png-transparent-nobita-nobi-illustration-nobita-nobi-doraemon-shizuka-minamoto-sewashi-animated-film-doraemon-nobi-doraemon-animated-film-thumbnail.png"
-                  alt=""
-                />
-                <div>
-                  <p>Nobita</p>
-                  <p>@nobita</p>
-                </div>
-              </div>
-              <button>Follow</button>
-            </div>
-            <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
+            {this.props.users.map((user) => {
+              if (user.username !== this.props.user.username) {
+                return (
+                  <>
+                    <div id="follow">
+                      <div>
+                        <img
+                          src={`data:image/jpeg;base64,${user.image}`}
+                          alt=""
+                        />
+                        <div>
+                          <p>{user.name}</p>
+                          <p>@{user.username}</p>
+                        </div>
+                      </div>
+                      <button>Follow</button>
+                    </div>
+                    <hr style={{ margin: "0px", marginTop: "0.2rem " }} />
+                  </>
+                );
+              }
+            })}
 
             <p style={{ padding: "7px", color: "#1da1f2", margin: "0px" }}>
               Show more
@@ -137,4 +148,4 @@ export class RightContainer extends Component {
   }
 }
 
-export default RightContainer;
+export default connect(mapStateToProps)(RightContainer);

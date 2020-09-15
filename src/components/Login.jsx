@@ -10,6 +10,17 @@ const mapDispatchToProps = (dispatch) => {
         type: "SET_USERNAME",
         payload: username,
       }),
+    getUser: (user) => {
+      dispatch({
+        type: "GET_USERINFO",
+        payload: user,
+      });
+    },
+    getUsers: (users) =>
+      dispatch({
+        type: "GET_USERS",
+        payload: users,
+      }),
   };
 };
 export class Login extends Component {
@@ -29,6 +40,14 @@ export class Login extends Component {
     user[id] = e.currentTarget.value;
     this.setState({ user });
   };
+  bufferToBase64 = (buf) => {
+    var binstr = Array.prototype.map
+      .call(buf, function (ch) {
+        return String.fromCharCode(ch);
+      })
+      .join("");
+    return btoa(binstr);
+  };
 
   loginHandler = async () => {
     let response = await fetch("http://localhost:3003/profiles/login", {
@@ -40,7 +59,23 @@ export class Login extends Component {
       body: JSON.stringify(this.state.user),
     });
     if (response.ok) {
-      this.props.setUser(this.state.user.username);
+      //
+      let userInfo = await fetch(`http://localhost:3003/profiles/me`, {
+        method: "GET",
+        credentials: "include",
+      });
+      let user = await userInfo.json();
+      user.image = this.bufferToBase64(user.image.data);
+      if (response.ok) {
+        this.props.getUser(this.state.user);
+      }
+      let usersResponse = await fetch(`http://localhost:3003/profiles`);
+      let users = await usersResponse.json();
+      users.forEach((user) => {
+        user.image = this.bufferToBase64(user.image.data);
+      });
+      this.props.getUsers(users);
+      //
       setTimeout(() => {
         this.props.history.push(`/home/me`);
       }, 1000);

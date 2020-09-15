@@ -20,6 +20,15 @@ import axios from "axios";
 
 const mapStateToProps = (state) => state;
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch({
+        type: "LOGOUT",
+      });
+    },
+  };
+};
 const customStyles = {
   content: {
     top: "50%",
@@ -99,6 +108,9 @@ class LeftContainer extends React.Component {
     let tweetImageResponse = await axios(tweetImage);
     this.setState({ tweet: { text: "" }, image: "" });
     this.props.history.push(`/home/${this.props.username}`);
+  };
+  logoutHandler = () => {
+    this.props.history.push("/");
   };
   render() {
     return (
@@ -243,7 +255,9 @@ class LeftContainer extends React.Component {
               <hr style={{ marginTop: "0.3rem", marginBottom: "0.5rem" }} />
               <p>Add a existing account</p>
               <hr style={{ marginTop: "0.3rem", marginBottom: "0.5rem" }} />
-              <p>Log out @{this.props.user.username}</p>
+              <p onClick={this.logoutHandler}>
+                Log out @{this.props.user.username}
+              </p>
             </div>
           </Modal>
         ) : null}
@@ -251,4 +265,7 @@ class LeftContainer extends React.Component {
     );
   }
 }
-export default connect(mapStateToProps)(withRouter(LeftContainer));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withRouter(LeftContainer));
