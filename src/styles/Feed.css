@@ -140,7 +140,7 @@
   color: #657786;
 }
 .tweet .content .icons p:first-of-type:hover {
-  color: #1da1f2;
+  color: rgb(182, 55, 55);
   cursor: pointer;
 }
 .tweet .content .icons p:nth-of-type(2):hover {
@@ -148,7 +148,7 @@
   cursor: pointer;
 }
 .tweet .content .icons p:nth-of-type(3):hover {
-  color: rgb(182, 55, 55);
+  color: #1da1f2;
   cursor: pointer;
 }
 /* Modals */

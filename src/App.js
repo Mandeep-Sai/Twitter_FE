@@ -10,6 +10,7 @@ import Lists from "./components/Lists/Lists";
 import Bookmarks from "./components/Bookmarks/Bookmarks";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { connect } from "react-redux";
+import InProgress from "./components/InProgress";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -68,6 +69,9 @@ class App extends React.Component {
         <Route path="/userinfo/:username" exact component={Profile} />
         <Route path="/:username/lists" exact component={Lists} />
         <Route path="/:username/bookmarks" exact component={Bookmarks} />
+        <Route path="/hashtags" exact component={InProgress} />
+        <Route path="/notifications" exact component={InProgress} />
+        <Route path="/messages" exact component={InProgress} />
       </Router>
     );
   }

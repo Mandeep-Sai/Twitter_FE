@@ -69,6 +69,7 @@ const deleteTweet = (tweet) => {
   return async (dispatch, getState) => {
     let response = await fetch(`http://localhost:3003/tweets/${tweet._id}`, {
       method: "DELETE",
+      credentials: "include",
     });
     if (response.ok) {
       alert("tweet deleted");
@@ -98,7 +99,7 @@ export class Feed extends Component {
       tweet: {
         text: "",
       },
-      image: "",
+      image: null,
       showDelete: false,
       showEdit: false,
       selectedTweet: "",
@@ -154,7 +155,6 @@ export class Feed extends Component {
     };
     let tweetResponse = await axios(tweet);
     let tweetId = tweetResponse.data;
-    console.log(tweetId);
     let tweetImage = {
       method: "POST",
       url: await `http://localhost:3003/tweets/${tweetId}`,
@@ -181,11 +181,6 @@ export class Feed extends Component {
     };
 
     let tweetResponse = await axios(editTweet);
-    console.log(this.state.selectedTweet._id);
-    /*
-    let tweetId = tweetResponse.data;
-    console.log(tweetId);
-    */
     let tweetImage = {
       method: "POST",
       url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
@@ -243,15 +238,12 @@ export class Feed extends Component {
                   <FaRegSmile />
                   <GoCalendar />
                 </div>
-
-                <div>
-                  <button
-                    disabled={this.state.tweet.text.length === 0}
-                    onClick={this.sendTweet}
-                  >
-                    Tweet
-                  </button>
-                </div>
+                {this.state.tweet.text.length !== 0 ||
+                this.state.image !== null ? (
+                  <div>
+                    <button onClick={this.sendTweet}>Tweet</button>
+                  </div>
+                ) : null}
               </div>
             </div>
             <hr
@@ -346,6 +338,12 @@ export class Feed extends Component {
                     ) : null}
                     <div className="icons">
                       <p>
+                        <AiOutlineHeart />{" "}
+                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                          7
+                        </span>
+                      </p>
+                      <p>
                         <BsChat />{" "}
                         <span style={{ fontSize: "18px", marginLeft: "7px" }}>
                           7
@@ -353,12 +351,6 @@ export class Feed extends Component {
                       </p>
                       <p>
                         <AiOutlineRetweet />{" "}
-                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                          7
-                        </span>
-                      </p>
-                      <p>
-                        <AiOutlineHeart />{" "}
                         <span style={{ fontSize: "18px", marginLeft: "7px" }}>
                           7
                         </span>

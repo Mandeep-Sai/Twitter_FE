@@ -92,6 +92,7 @@ class LeftContainer extends React.Component {
         "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
       },
       data: this.state.tweet,
+      withCredentials: true,
     };
     let tweetResponse = await axios(tweet);
     let tweetId = tweetResponse.data;
@@ -104,10 +105,11 @@ class LeftContainer extends React.Component {
         "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
       },
       data: this.state.image,
+      withCredentials: true,
     };
     let tweetImageResponse = await axios(tweetImage);
     this.setState({ tweet: { text: "" }, image: "" });
-    this.props.history.push(`/home/${this.props.username}`);
+    this.props.history.push(`/home/me`);
   };
   logoutHandler = () => {
     this.props.history.push("/");
@@ -126,14 +128,22 @@ class LeftContainer extends React.Component {
             <GoHome />
           </Link>
         </div>
-        <div>
-          <FiHash />
+        <div className={this.props.active === "hashtags" ? "active" : null}>
+          <Link to={`/hashtags`}>
+            <FiHash />
+          </Link>
         </div>
-        <div>
-          <FiBell />
+        <div
+          className={this.props.active === "notifications" ? "active" : null}
+        >
+          <Link to={`/notifications`}>
+            <FiBell />
+          </Link>
         </div>
-        <div>
-          <FiMail />
+        <div className={this.props.active === "messages" ? "active" : null}>
+          <Link to={`/messages`}>
+            <FiMail />
+          </Link>
         </div>
         <div className={this.props.active === "bookmarks" ? "active" : null}>
           <Link to={`/${this.props.username}/bookmarks`}>
