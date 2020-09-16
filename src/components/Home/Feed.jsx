@@ -16,7 +16,6 @@ import { BsChat } from "react-icons/bs";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import axios from "axios";
-import alanBtn from "@alan-ai/alan-sdk-web";
 import { withRouter } from "react-router-dom";
 
 const mapStateToProps = (state) => state;
@@ -194,6 +193,9 @@ export class Feed extends Component {
     this.setState({ tweet: { text: "" }, image: "", selectedTweet: "" });
     this.props.getTweets();
   };
+  sendLike = (username, name, tweet) => {
+    this.props.likeFunc(username, name, tweet);
+  };
 
   render() {
     return (
@@ -337,10 +339,18 @@ export class Feed extends Component {
                       />
                     ) : null}
                     <div className="icons">
-                      <p>
+                      <p
+                        onClick={() =>
+                          this.sendLike(
+                            tweet.user.username,
+                            this.props.user.name,
+                            tweet.text
+                          )
+                        }
+                      >
                         <AiOutlineHeart />{" "}
                         <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                          7
+                          {tweet.likes}
                         </span>
                       </p>
                       <p>

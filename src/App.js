@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { Toast } from "react-bootstrap";
 import StartPage from "./components/StartPage";
 import Login from "./components/Login";
 import Home from "./components/Home/Home";
@@ -31,6 +32,9 @@ class App extends React.Component {
     super(props);
     this.state = {
       filteredUser: "",
+      showLikeToaster: false,
+      likedBy: "",
+      tweet: "",
     };
   }
 
@@ -61,17 +65,32 @@ class App extends React.Component {
     });
   };
   componentDidUpdate = (prevProps) => {
-    if (prevProps.user.username !== "") {
+    if (prevProps.user.username !== " ") {
       const connOpt = {
         transports: ["websocket"],
       };
       this.socket = io("http://localhost:3004", connOpt);
       this.socket.on("connect", () => {
         this.socket.emit("info", {
-          username: this.state.username,
+          username: this.props.user.username,
+        });
+      });
+      this.socket.on("notification", ({ tweetedBy, likedBy, tweet }) => {
+        console.log(`${likedBy} liked your recent tweet "${tweet}"`);
+        this.setState({
+          likedBy: likedBy,
+          tweet: tweet,
+          showLikeToaster: true,
         });
       });
     }
+  };
+  sendLike = (username, name, tweet) => {
+    this.socket.emit("likeAdded", {
+      tweetedBy: username,
+      likedBy: name,
+      tweet: tweet,
+    });
   };
 
   render() {
@@ -79,13 +98,33 @@ class App extends React.Component {
       <Router>
         <Route path="/" exact component={StartPage} />
         <Route path="/login" exact component={Login} />
-        <Route path="/home/me" exact component={Home} />
+        {/* <Route path="/home/me" exact component={Home} /> */}
+        <Route
+          path="/home/me"
+          exact
+          render={(props) => <Home {...props} likeFunc={this.sendLike} />}
+        />
         <Route path="/userinfo/:username" exact component={Profile} />
         <Route path="/:username/lists" exact component={Lists} />
         <Route path="/:username/bookmarks" exact component={Bookmarks} />
         <Route path="/hashtags" exact component={InProgress} />
         <Route path="/notifications" exact component={InProgress} />
         <Route path="/messages" exact component={InProgress} />
+
+        <Toast
+          style={{ position: "absolute", top: "0", right: "0" }}
+          onClose={() => this.setState({ showLikeToaster: false })}
+          show={this.state.showLikeToaster}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className="mr-auto">Notification</strong>
+          </Toast.Header>
+          <Toast.Body>
+            {this.state.likedBy} liked your recent tweet "{this.state.tweet}"
+          </Toast.Body>
+        </Toast>
       </Router>
     );
   }
