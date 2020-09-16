@@ -11,6 +11,7 @@ import Bookmarks from "./components/Bookmarks/Bookmarks";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { connect } from "react-redux";
 import InProgress from "./components/InProgress";
+import io from "socket.io-client";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -58,6 +59,19 @@ class App extends React.Component {
         }
       },
     });
+  };
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.user.username !== "") {
+      const connOpt = {
+        transports: ["websocket"],
+      };
+      this.socket = io("http://localhost:3004", connOpt);
+      this.socket.on("connect", () => {
+        this.socket.emit("info", {
+          username: this.state.username,
+        });
+      });
+    }
   };
 
   render() {

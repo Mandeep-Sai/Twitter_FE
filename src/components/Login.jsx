@@ -67,6 +67,7 @@ export class Login extends Component {
       let user = await userInfo.json();
       user.image = this.bufferToBase64(user.image.data);
       if (response.ok) {
+        this.setState({ user });
         this.props.getUser(this.state.user);
       }
       let usersResponse = await fetch(`http://localhost:3003/profiles`);
