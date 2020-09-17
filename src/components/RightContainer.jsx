@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 const mapStateToProps = (state) => state;
 
-export class RightContainer extends Component {
+class RightContainer extends Component {
   constructor(props) {
     super(props);
 

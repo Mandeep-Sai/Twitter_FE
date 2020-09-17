@@ -10,6 +10,8 @@ const initialState = {
   username: null,
   users: null,
   searchUsername: null,
+  activePage: null,
+  notifications: 0,
 };
 const persistConfig = {
   key: "root",

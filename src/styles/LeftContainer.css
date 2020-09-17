@@ -15,6 +15,7 @@
   height: 25px;
 }
 #leftBar > div {
+  position: relative;
   margin-bottom: 5px;
   height: 60px;
   width: 60px;
@@ -138,4 +139,9 @@
 }
 #logoutModal > p:hover {
   cursor: pointer;
+}
+.badge-pill {
+  border-radius: 30px !important;
+  position: absolute;
+  right: 10px;
 }

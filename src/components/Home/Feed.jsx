@@ -193,8 +193,9 @@ export class Feed extends Component {
     this.setState({ tweet: { text: "" }, image: "", selectedTweet: "" });
     this.props.getTweets();
   };
-  sendLike = (username, name, tweet) => {
-    this.props.likeFunc(username, name, tweet);
+  sendLike = (username, name, tweetText, tweetId) => {
+    this.props.likeFunc(username, name, tweetText, tweetId);
+    // this.props.updateLikesFunc(tweetId);
   };
 
   render() {
@@ -344,7 +345,8 @@ export class Feed extends Component {
                           this.sendLike(
                             tweet.user.username,
                             this.props.user.name,
-                            tweet.text
+                            tweet.text,
+                            tweet._id
                           )
                         }
                       >

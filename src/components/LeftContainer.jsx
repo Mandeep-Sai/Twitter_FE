@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/LeftContainer.css";
 import { GoHome } from "react-icons/go";
+import { Badge } from "react-bootstrap";
 import { FiHash, FiBell, FiMail, FiBookmark } from "react-icons/fi";
 import {
   AiOutlineUser,
@@ -138,6 +139,11 @@ class LeftContainer extends React.Component {
         >
           <Link to={`/notifications`}>
             <FiBell />
+            {this.props.notifications > 0 ? (
+              <Badge pill variant="danger">
+                {this.props.notifications}
+              </Badge>
+            ) : null}
           </Link>
         </div>
         <div className={this.props.active === "messages" ? "active" : null}>

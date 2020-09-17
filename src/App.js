@@ -13,6 +13,7 @@ import alanBtn from "@alan-ai/alan-sdk-web";
 import { connect } from "react-redux";
 import InProgress from "./components/InProgress";
 import io from "socket.io-client";
+import Notifications from "./components/Notifications";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -21,6 +22,15 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: "SEARCH_USER",
         payload: username,
+      }),
+    updateLikes: (tweet) =>
+      dispatch({
+        type: "UPDATE_LIKES",
+        payload: tweet,
+      }),
+    addNotification: () =>
+      dispatch({
+        type: "ADD_NOTIFICATION",
       }),
   };
 };
@@ -64,8 +74,8 @@ class App extends React.Component {
       },
     });
   };
-  componentDidUpdate = (prevProps) => {
-    if (prevProps.user.username !== " ") {
+  componentDidUpdate = () => {
+    if (this.props.user.username !== null) {
       const connOpt = {
         transports: ["websocket"],
       };
@@ -75,21 +85,37 @@ class App extends React.Component {
           username: this.props.user.username,
         });
       });
-      this.socket.on("notification", ({ tweetedBy, likedBy, tweet }) => {
-        console.log(`${likedBy} liked your recent tweet "${tweet}"`);
-        this.setState({
-          likedBy: likedBy,
-          tweet: tweet,
-          showLikeToaster: true,
-        });
+      this.socket.on(
+        "notification",
+        ({ tweetedBy, likedBy, tweetText, tweetId }) => {
+          if (likedBy !== this.props.user.name) {
+            if (this.props.activePage !== "notifications") {
+              this.props.addNotification();
+              this.setState({
+                likedBy: likedBy,
+                tweet: tweetText,
+                showLikeToaster: true,
+              });
+            }
+          }
+        }
+      );
+      this.socket.once("increaseLikes", ({ tweetId }) => {
+        this.props.updateLikes(tweetId);
       });
     }
   };
-  sendLike = (username, name, tweet) => {
+  sendLike = (username, name, tweetText, tweetId) => {
     this.socket.emit("likeAdded", {
       tweetedBy: username,
       likedBy: name,
-      tweet: tweet,
+      tweetText: tweetText,
+      tweetId: tweetId,
+    });
+  };
+  updateLikesForAll = (tweetId) => {
+    this.socket.emit("updateLikes", {
+      tweetId: tweetId,
     });
   };
 
@@ -102,17 +128,23 @@ class App extends React.Component {
         <Route
           path="/home/me"
           exact
-          render={(props) => <Home {...props} likeFunc={this.sendLike} />}
+          render={(props) => (
+            <Home
+              {...props}
+              likeFunc={this.sendLike}
+              updateLikesFunc={this.updateLikesForAll}
+            />
+          )}
         />
         <Route path="/userinfo/:username" exact component={Profile} />
         <Route path="/:username/lists" exact component={Lists} />
         <Route path="/:username/bookmarks" exact component={Bookmarks} />
         <Route path="/hashtags" exact component={InProgress} />
-        <Route path="/notifications" exact component={InProgress} />
+        <Route path="/notifications" exact component={Notifications} />
         <Route path="/messages" exact component={InProgress} />
 
         <Toast
-          style={{ position: "absolute", top: "0", right: "0" }}
+          style={{ position: "absolute", top: "20px", right: "20px" }}
           onClose={() => this.setState({ showLikeToaster: false })}
           show={this.state.showLikeToaster}
           delay={3000}
@@ -122,7 +154,8 @@ class App extends React.Component {
             <strong className="mr-auto">Notification</strong>
           </Toast.Header>
           <Toast.Body>
-            {this.state.likedBy} liked your recent tweet "{this.state.tweet}"
+            {this.state.likedBy} liked your recent tweet{" "}
+            <strong>{this.state.tweet}</strong>
           </Toast.Body>
         </Toast>
       </Router>

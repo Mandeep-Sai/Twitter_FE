@@ -51,7 +51,10 @@ export class Home extends Component {
           <LeftContainer active="home" />
         </div>
         <div>
-          <Feed likeFunc={this.props.likeFunc} />
+          <Feed
+            likeFunc={this.props.likeFunc}
+            updateLikesFunc={this.props.updateLikesFunc}
+          />
         </div>
         <div>
           <RightContainer />
