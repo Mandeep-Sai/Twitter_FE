@@ -62,20 +62,27 @@ export default function (state = {}, action) {
         notificationsArrray: [],
       };
     case "ADD_TO_LIKED_TWEETS":
+      const updatedTweets = state.user.likedTweets.concat(action.payload);
       return {
         ...state,
-        likedTweets: [...state.likedTweets, action.payload],
+        user: {
+          ...state.user,
+          likedTweets: updatedTweets,
+        },
       };
     case "REMOVE_FROM_LIKED_TWEETS":
-      const tweetToRemove = state.likedTweets.findIndex(
+      const tweetToRemove = state.user.likedTweets.findIndex(
         (tweet) => tweet === action.payload
       );
       return {
         ...state,
-        likedTweets: [
-          ...state.likedTweets.slice(0, tweetToRemove),
-          ...state.likedTweets.slice(tweetToRemove + 1),
-        ],
+        user: {
+          ...state.user,
+          likedTweets: [
+            ...state.user.likedTweets.slice(0, tweetToRemove),
+            ...state.user.likedTweets.slice(tweetToRemove + 1),
+          ],
+        },
       };
     case "UPDATE_LIKES":
       const tweet = state.tweets.find((tweet) => tweet._id === action.payload);

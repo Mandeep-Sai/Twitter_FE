@@ -357,7 +357,7 @@ export class Feed extends Component {
                       />
                     ) : null}
                     <div className="icons">
-                      {this.props.likedTweets.find(
+                      {this.props.user.likedTweets.find(
                         (element) => element === tweet._id
                       ) ? (
                         <p onClick={() => this.unlike(tweet._id)}>
@@ -366,12 +366,7 @@ export class Feed extends Component {
                               color: "red",
                             }}
                           />
-                          <span
-                            style={{
-                              fontSize: "18px",
-                              marginLeft: "7px",
-                            }}
-                          >
+                          <span style={{ fontSize: "18px", marginLeft: "7px" }}>
                             {tweet.likes}
                           </span>
                         </p>
