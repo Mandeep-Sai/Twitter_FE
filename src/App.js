@@ -115,12 +115,31 @@ class App extends React.Component {
           }
         }
       );
-      this.socket.on("increaseLikes", ({ tweetId }) => {
-        console.log("inc");
-        this.props.updateLikes(tweetId);
+      this.socket.on("increaseLikes", async ({ tweetId }) => {
+        let response = await fetch("http://localhost:3003/tweets/addLike", {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ tweetId }),
+          headers: new Headers({
+            "content-type": "application/json",
+          }),
+        });
+        if (response.ok) {
+          this.props.updateLikes(tweetId);
+        }
       });
-      this.socket.on("decreaseLikes", ({ tweetId }) => {
-        this.props.updateDislikes(tweetId);
+      this.socket.on("decreaseLikes", async ({ tweetId }) => {
+        let response = await fetch("http://localhost:3003/tweets/removeLike", {
+          method: "POST",
+          credentials: "include",
+          body: JSON.stringify({ tweetId }),
+          headers: new Headers({
+            "content-type": "application/json",
+          }),
+        });
+        if (response.ok) {
+          this.props.updateDislikes(tweetId);
+        }
       });
     }
   };
@@ -148,7 +167,6 @@ class App extends React.Component {
       <Router>
         <Route path="/" exact component={StartPage} />
         <Route path="/login" exact component={Login} />
-        {/* <Route path="/home/me" exact component={Home} /> */}
         <Route
           path="/home/me"
           exact
