@@ -52,6 +52,9 @@
   cursor: pointer;
   background-color: rgb(26, 145, 218);
 }
+#login button:focus {
+  outline: none !important;
+}
 #login #bottomContent {
   display: flex;
   width: 300px;

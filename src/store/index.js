@@ -12,6 +12,8 @@ const initialState = {
   searchUsername: null,
   activePage: null,
   notifications: 0,
+  notificationsArrray: [],
+  likedTweets: [],
 };
 const persistConfig = {
   key: "root",
@@ -20,15 +22,6 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, mainReducers);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-/*
-export default function configureStore() {
-  return createStore(
-    mainReducers,
-    initialState,
-    composeEnhancers(applyMiddleware(thunk))
-  );
-}
-*/
 export const store = createStore(
   persistedReducer,
   initialState,

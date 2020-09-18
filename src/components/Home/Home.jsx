@@ -54,6 +54,7 @@ export class Home extends Component {
           <Feed
             likeFunc={this.props.likeFunc}
             updateLikesFunc={this.props.updateLikesFunc}
+            updateDislikesFunc={this.props.updateDislikesFunc}
           />
         </div>
         <div>

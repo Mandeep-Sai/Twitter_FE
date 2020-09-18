@@ -28,9 +28,19 @@ const mapDispatchToProps = (dispatch) => {
         type: "UPDATE_LIKES",
         payload: tweet,
       }),
-    addNotification: () =>
+    updateDislikes: (tweetId) =>
+      dispatch({
+        type: "UPDATE_DISLIKES",
+        payload: tweetId,
+      }),
+    notificationCounter: () =>
+      dispatch({
+        type: "NOTIFICATION_COUNTER",
+      }),
+    addNotification: (notification) =>
       dispatch({
         type: "ADD_NOTIFICATION",
+        payload: notification,
       }),
   };
 };
@@ -89,19 +99,28 @@ class App extends React.Component {
         "notification",
         ({ tweetedBy, likedBy, tweetText, tweetId }) => {
           if (likedBy !== this.props.user.name) {
+            this.setState({
+              likedBy: likedBy,
+              tweet: tweetText,
+            });
             if (this.props.activePage !== "notifications") {
-              this.props.addNotification();
+              this.props.notificationCounter();
               this.setState({
-                likedBy: likedBy,
-                tweet: tweetText,
                 showLikeToaster: true,
               });
             }
+            let notification = `${this.state.likedBy} liked your recent tweet
+            ${this.state.tweet}`;
+            this.props.addNotification(notification);
           }
         }
       );
-      this.socket.once("increaseLikes", ({ tweetId }) => {
+      this.socket.on("increaseLikes", ({ tweetId }) => {
+        console.log("inc");
         this.props.updateLikes(tweetId);
+      });
+      this.socket.on("decreaseLikes", ({ tweetId }) => {
+        this.props.updateDislikes(tweetId);
       });
     }
   };
@@ -115,6 +134,11 @@ class App extends React.Component {
   };
   updateLikesForAll = (tweetId) => {
     this.socket.emit("updateLikes", {
+      tweetId: tweetId,
+    });
+  };
+  updateDislikesForAll = (tweetId) => {
+    this.socket.emit("updateDislikes", {
       tweetId: tweetId,
     });
   };
@@ -133,6 +157,7 @@ class App extends React.Component {
               {...props}
               likeFunc={this.sendLike}
               updateLikesFunc={this.updateLikesForAll}
+              updateDislikesFunc={this.updateDislikesForAll}
             />
           )}
         />
@@ -164,26 +189,3 @@ class App extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-/* 
- useEffect(() => {
-    console.log(props);
-    alanBtn({
-      key: alanKey,
-      onCommand: ({ command, profile }) => {
-        if (command === "fetchTweets") {
-          console.log(username);
-          window.location.href = `/home/${username}`;
-        }
-        if (command === "fetchProfile") {
-          // console.log(profile);
-          let username = profile.username;
-          window.location.href = `/userinfo/${username}`;
-        }
-      },
-    });
-  }, []);
-  useEffect(() => {
-    setUsername(props.user.username);
-  }, [props.user]);
-*/

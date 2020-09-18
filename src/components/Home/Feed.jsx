@@ -7,6 +7,7 @@ import {
   AiOutlineFileGif,
   AiOutlineRetweet,
   AiOutlineHeart,
+  AiFillHeart,
 } from "react-icons/ai";
 import { FiBarChart, FiUpload } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
@@ -24,6 +25,16 @@ const mapDispatchToProps = (dispatch) => {
     getTweets: () => dispatch(fetchTweets()),
 
     removeTweet: (tweet) => dispatch(deleteTweet(tweet)),
+    addToLikedTweets: (tweetId) =>
+      dispatch({
+        type: "ADD_TO_LIKED_TWEETS",
+        payload: tweetId,
+      }),
+    removeFromLikedTweets: (tweetId) =>
+      dispatch({
+        type: "REMOVE_FROM_LIKED_TWEETS",
+        payload: tweetId,
+      }),
   };
 };
 const bufferToBase64 = (buf) => {
@@ -195,7 +206,13 @@ export class Feed extends Component {
   };
   sendLike = (username, name, tweetText, tweetId) => {
     this.props.likeFunc(username, name, tweetText, tweetId);
-    // this.props.updateLikesFunc(tweetId);
+    this.props.addToLikedTweets(tweetId);
+    this.props.updateLikesFunc(tweetId);
+  };
+  unlike = (tweetId) => {
+    this.props.removeFromLikedTweets(tweetId);
+
+    this.props.updateDislikesFunc(tweetId);
   };
 
   render() {
@@ -340,21 +357,41 @@ export class Feed extends Component {
                       />
                     ) : null}
                     <div className="icons">
-                      <p
-                        onClick={() =>
-                          this.sendLike(
-                            tweet.user.username,
-                            this.props.user.name,
-                            tweet.text,
-                            tweet._id
-                          )
-                        }
-                      >
-                        <AiOutlineHeart />{" "}
-                        <span style={{ fontSize: "18px", marginLeft: "7px" }}>
-                          {tweet.likes}
-                        </span>
-                      </p>
+                      {this.props.likedTweets.find(
+                        (element) => element === tweet._id
+                      ) ? (
+                        <p onClick={() => this.unlike(tweet._id)}>
+                          <AiFillHeart
+                            style={{
+                              color: "red",
+                            }}
+                          />
+                          <span
+                            style={{
+                              fontSize: "18px",
+                              marginLeft: "7px",
+                            }}
+                          >
+                            {tweet.likes}
+                          </span>
+                        </p>
+                      ) : (
+                        <p
+                          onClick={() =>
+                            this.sendLike(
+                              tweet.user.username,
+                              this.props.user.name,
+                              tweet.text,
+                              tweet._id
+                            )
+                          }
+                        >
+                          <AiOutlineHeart />{" "}
+                          <span style={{ fontSize: "18px", marginLeft: "7px" }}>
+                            {tweet.likes}
+                          </span>
+                        </p>
+                      )}
                       <p>
                         <BsChat />{" "}
                         <span style={{ fontSize: "18px", marginLeft: "7px" }}>

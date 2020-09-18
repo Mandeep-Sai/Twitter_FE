@@ -5,6 +5,8 @@ import LeftContainer from "./LeftContainer";
 import RightContainer from "./RightContainer";
 import "../styles/Notifications.css";
 
+import { FiSettings } from "react-icons/fi";
+
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -16,6 +18,10 @@ const mapDispatchToProps = (dispatch) => {
     resetNotifications: () =>
       dispatch({
         type: "RESET_NOTIFICATIONS",
+      }),
+    clearNotificationsArray: () =>
+      dispatch({
+        type: "CLEAR_NOTIFICATIONS_ARRAY",
       }),
   };
 };
@@ -29,17 +35,38 @@ class Notifications extends Component {
   componentWillUnmount() {
     let page = "";
     this.props.updateActivePage(page);
+    this.props.clearNotificationsArray();
   }
   render() {
     return (
       <>
         <Container id="notifications">
           <div>
-            <LeftContainer />
+            <LeftContainer active="notifications" />
           </div>
           <div id="content">
-            <p>Notification 1</p>
-            <p>Notification 2</p>
+            <div className="header">
+              <p>Notifications</p>
+              <FiSettings />
+            </div>
+            <hr style={{ marginLeft: "-20px", marginRight: "-20px" }} />
+            {this.props.notificationsArrray.length > 0 ? (
+              this.props.notificationsArrray.map((notification) => {
+                return <p>{notification}</p>;
+              })
+            ) : (
+              <p
+                style={{
+                  textAlign: "center",
+                  width: "300px",
+                  margin: "auto",
+                  backgroundColor: "white",
+                  fontSize: "30px",
+                }}
+              >
+                No Notifications
+              </p>
+            )}
           </div>
           <div>
             <RightContainer />

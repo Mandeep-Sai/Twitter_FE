@@ -41,15 +41,41 @@ export default function (state = {}, action) {
         ...state,
         activePage: action.payload,
       };
-    case "ADD_NOTIFICATION":
+    case "NOTIFICATION_COUNTER":
       return {
         ...state,
         notifications: state.notifications + 1,
+      };
+    case "ADD_NOTIFICATION":
+      return {
+        ...state,
+        notificationsArrray: [...state.notificationsArrray, action.payload],
       };
     case "RESET_NOTIFICATIONS":
       return {
         ...state,
         notifications: 0,
+      };
+    case "CLEAR_NOTIFICATIONS_ARRAY":
+      return {
+        ...state,
+        notificationsArrray: [],
+      };
+    case "ADD_TO_LIKED_TWEETS":
+      return {
+        ...state,
+        likedTweets: [...state.likedTweets, action.payload],
+      };
+    case "REMOVE_FROM_LIKED_TWEETS":
+      const tweetToRemove = state.likedTweets.findIndex(
+        (tweet) => tweet === action.payload
+      );
+      return {
+        ...state,
+        likedTweets: [
+          ...state.likedTweets.slice(0, tweetToRemove),
+          ...state.likedTweets.slice(tweetToRemove + 1),
+        ],
       };
     case "UPDATE_LIKES":
       const tweet = state.tweets.find((tweet) => tweet._id === action.payload);
@@ -66,6 +92,23 @@ export default function (state = {}, action) {
       return {
         ...state,
         tweets: filteredTweets,
+      };
+    case "UPDATE_DISLIKES":
+      const tweetToUpdate = state.tweets.find(
+        (tweet) => tweet._id === action.payload
+      );
+      const tweetToUpdateIndex = state.tweets.findIndex(
+        (tweet) => tweet._id === action.payload
+      );
+      const newFilteredTweets = [
+        ...state.tweets.slice(0, tweetToUpdateIndex),
+        ...state.tweets.slice(tweetToUpdateIndex + 1),
+      ];
+      tweetToUpdate.likes -= 1;
+      newFilteredTweets.splice(tweetToUpdateIndex, 0, tweetToUpdate);
+      return {
+        ...state,
+        tweets: newFilteredTweets,
       };
     default:
       return state;
