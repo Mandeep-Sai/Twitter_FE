@@ -82,7 +82,6 @@ const deleteTweet = (tweet) => {
       credentials: "include",
     });
     if (response.ok) {
-      alert("tweet deleted");
       dispatch({
         type: "DELETE_TWEET",
         payload: tweet._id,
@@ -154,6 +153,7 @@ export class Feed extends Component {
   };
   sendTweet = async () => {
     //
+    this.setState({ loading: true });
     let tweet = {
       method: "POST",
       url: await `http://localhost:3003/tweets`,
@@ -175,11 +175,12 @@ export class Feed extends Component {
       data: this.state.image,
     };
     let tweetImageResponse = await axios(tweetImage);
-    this.setState({ tweet: { text: "" }, image: "" });
     this.props.getTweets();
+    this.setState({ tweet: { text: "" }, image: "", loading: false });
   };
   //Editing a tweet
   editTweet = async () => {
+    this.setState({ loading: true });
     let editTweet = {
       method: "PUT",
       url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
@@ -201,8 +202,13 @@ export class Feed extends Component {
       data: this.state.image,
     };
     let tweetImageResponse = await axios(tweetImage);
-    this.setState({ tweet: { text: "" }, image: "", selectedTweet: "" });
     this.props.getTweets();
+    this.setState({
+      tweet: { text: "" },
+      image: "",
+      selectedTweet: "",
+      loading: false,
+    });
   };
   sendLike = (username, name, tweetText, tweetId) => {
     this.props.likeFunc(username, name, tweetText, tweetId);
@@ -426,8 +432,15 @@ export class Feed extends Component {
                 <div id="buttons">
                   <button
                     onClick={() => {
+                      this.setState({ loading: true });
                       this.props.removeTweet(this.state.selectedTweet);
-                      this.setState({ showDelete: false, selectedTweet: "" });
+                      setTimeout(() => {
+                        this.setState({
+                          showDelete: false,
+                          selectedTweet: "",
+                          loading: false,
+                        });
+                      }, 500);
                     }}
                   >
                     Confirm
