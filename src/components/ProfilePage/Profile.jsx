@@ -50,6 +50,8 @@ export class Profile extends Component {
       userInfo: "",
       showEdit: false,
       image: null,
+      loading: false,
+      updateUserInfo: {},
     };
     this.inputRef = React.createRef();
   }
@@ -89,10 +91,10 @@ export class Profile extends Component {
     }
   };
   updateInfo = (e) => {
-    let userInfo = this.state.userInfo;
+    let updateUserInfo = this.state.updateUserInfo;
     let id = e.currentTarget.id;
-    userInfo[id] = e.currentTarget.value;
-    this.setState({ userInfo });
+    updateUserInfo[id] = e.currentTarget.value;
+    this.setState({ updateUserInfo });
   };
   handleImageInput = (e) => {
     this.inputRef.current.click();
@@ -107,19 +109,20 @@ export class Profile extends Component {
   };
   editUser = async (e) => {
     e.preventDefault();
+    console.log(this.state.updateUserInfo);
     let editInfo = {
       method: "PUT",
       url: await `http://localhost:3003/profiles/me`,
       headers: {
-        username: this.props.user.username,
         "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
       },
-      data: this.state.userInfo,
+      data: this.state.updateUserInfo,
       withCredentials: true,
     };
 
     let tweetResponse = await axios(editInfo);
     if (this.state.image !== null) {
+      console.log("stf");
       let userImage = {
         method: "POST",
         url: await `http://localhost:3003/profiles/${this.state.userInfo._id}/uploadImage`,
@@ -137,29 +140,28 @@ export class Profile extends Component {
       method: "GET",
       credentials: "include",
     });
-    let user = await response.json();
-    user.image = this.bufferToBase64(user.image.data);
+    let userInfo = await response.json();
+    userInfo.image = this.bufferToBase64(userInfo.image.data);
     if (response.ok) {
-      this.setState({ user });
-      this.props.getUser(this.state.user);
+      console.log("Ok");
+      this.setState({ showEdit: false, loading: true, image: null });
+      this.setState({ userInfo });
+      setTimeout(() => {
+        this.props.getUser(this.state.userInfo);
+      }, 500);
     }
-    alert("changed sucessfully");
-    this.setState({ showEdit: false });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 900);
   };
   render() {
     return (
       <Container id="profile">
         <div>
-          {/*
-          {this.state.user === this.props.username ? (
-            <LeftContainer active="userInfo" />
-            ) : (
-              <LeftContainer />
-            )} */}
           <LeftContainer active="userInfo" />
         </div>
         <div>
-          {!this.state.userInfo ? (
+          {!this.state.userInfo || this.state.loading === true ? (
             <Spinner animation="border" variant="primary" />
           ) : (
             <Container id="userInfo">
@@ -178,7 +180,7 @@ export class Profile extends Component {
                   src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
                   alt=""
                 />
-                {this.state.userInfo.username === this.props.username ? (
+                {this.state.userInfo.username === this.props.user.username ? (
                   <button onClick={() => this.setState({ showEdit: true })}>
                     Edit Profile
                   </button>
@@ -299,7 +301,7 @@ export class Profile extends Component {
                   id="name"
                   type="text"
                   required
-                  value={this.state.userInfo.name}
+                  placeholder={this.state.userInfo.name}
                 />
               </div>
               <div className="inputDivs">
@@ -309,7 +311,7 @@ export class Profile extends Component {
                   id="area"
                   type="text"
                   required
-                  value={this.state.userInfo.area}
+                  placeholder={this.state.userInfo.area}
                 />
               </div>
               <p style={{ marginTop: "10px" }}>Date of Birth</p>
