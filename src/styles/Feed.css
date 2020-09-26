@@ -67,6 +67,11 @@
 #createTweet #icons button:focus {
   outline: none;
 }
+#createTweet #imagePreview img {
+  width: 80%;
+  margin-left: 10%;
+  height: 300px;
+}
 .tweet {
   display: flex;
   padding: 15px;
@@ -183,6 +188,10 @@
 #editTweet #content textarea:focus {
   outline: none;
 }
+#editTweet #imagePreview img {
+  width: 100%;
+  height: 300px;
+}
 #editTweet #buttons {
   margin-left: 25%;
   padding: 15px;
@@ -228,6 +237,23 @@
   position: absolute;
   top: 40%;
   color: #1da1f2 !important;
+}
+#imagePreview {
+  position: relative;
+}
+#imagePreview svg {
+  position: absolute;
+  font-size: 25px;
+  left: 11%;
+  top: 2%;
+  color: white;
+  z-index: 10;
+}
+#editTweet #imagePreview svg {
+  left: 1%;
+}
+#imagePreview svg:hover {
+  cursor: pointer;
 }
 /*
   .tweet .content .icons > p {

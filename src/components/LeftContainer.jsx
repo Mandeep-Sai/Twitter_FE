@@ -8,6 +8,7 @@ import {
   AiOutlineClose,
   AiOutlinePicture,
   AiOutlineFileGif,
+  AiFillCloseCircle,
 } from "react-icons/ai";
 import { BsCardText, BsThreeDots } from "react-icons/bs";
 import { RiQuillPenLine } from "react-icons/ri";
@@ -62,6 +63,7 @@ class LeftContainer extends React.Component {
       image: "",
       showCreateTweet: false,
       showLogout: false,
+      tempUrl: null,
     };
     this.inputRef = React.createRef();
   }
@@ -80,6 +82,7 @@ class LeftContainer extends React.Component {
     formData.append("picture", file);
     this.setState({
       image: formData,
+      tempUrl: URL.createObjectURL(e.target.files[0]),
     });
   };
   sendTweet = async () => {
@@ -114,6 +117,10 @@ class LeftContainer extends React.Component {
   };
   logoutHandler = () => {
     this.props.history.push("/");
+    //this.props.logout();
+  };
+  closeImagePreview = () => {
+    this.setState({ tempUrl: null });
   };
   render() {
     return (
@@ -215,6 +222,12 @@ class LeftContainer extends React.Component {
                 id="text"
               />
             </div>
+            {this.state.tempUrl !== null ? (
+              <div id="imagePreview">
+                <AiFillCloseCircle onClick={this.closeImagePreview} />
+                <img src={this.state.tempUrl} alt="" />
+              </div>
+            ) : null}
             <hr />
             <div id="footer">
               <div id="icons">

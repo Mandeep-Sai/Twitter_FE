@@ -117,6 +117,8 @@ export default function (state = {}, action) {
         ...state,
         tweets: newFilteredTweets,
       };
+    case "LOGOUT":
+      return undefined;
     default:
       return state;
   }

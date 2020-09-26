@@ -83,6 +83,11 @@
   outline: none;
   border: none;
 }
+#createTweetModal #imagePreview img {
+  width: 80%;
+  margin: 0px 10%;
+  height: 300px;
+}
 #createTweetModal #footer {
   padding: 10px;
   display: flex;

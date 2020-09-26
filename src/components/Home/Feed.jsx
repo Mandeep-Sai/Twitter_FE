@@ -8,6 +8,7 @@ import {
   AiOutlineRetweet,
   AiOutlineHeart,
   AiFillHeart,
+  AiFillCloseCircle,
 } from "react-icons/ai";
 import { FiBarChart, FiUpload } from "react-icons/fi";
 import { FaRegSmile } from "react-icons/fa";
@@ -116,6 +117,7 @@ export class Feed extends Component {
       newTweet: {
         text: "",
       },
+      tempUrl: null,
     };
     this.inputRef = React.createRef();
   }
@@ -136,6 +138,7 @@ export class Feed extends Component {
     formData.append("picture", file);
     this.setState({
       image: formData,
+      tempUrl: URL.createObjectURL(e.target.files[0]),
     });
   };
   //
@@ -151,8 +154,8 @@ export class Feed extends Component {
     newTweet[id] = e.currentTarget.value;
     this.setState({ newTweet });
   };
+  //sending a tweet
   sendTweet = async () => {
-    //
     this.setState({ loading: true });
     let tweet = {
       method: "POST",
@@ -176,7 +179,12 @@ export class Feed extends Component {
     };
     let tweetImageResponse = await axios(tweetImage);
     this.props.getTweets();
-    this.setState({ tweet: { text: "" }, image: "", loading: false });
+    this.setState({
+      tweet: { text: "" },
+      image: "",
+      loading: false,
+      tempUrl: null,
+    });
   };
   //Editing a tweet
   editTweet = async () => {
@@ -208,6 +216,7 @@ export class Feed extends Component {
       image: "",
       selectedTweet: "",
       loading: false,
+      tempUrl: null,
     });
   };
   sendLike = (username, name, tweetText, tweetId) => {
@@ -219,6 +228,9 @@ export class Feed extends Component {
     this.props.removeFromLikedTweets(tweetId);
 
     this.props.updateDislikesFunc(tweetId);
+  };
+  closeImagePreview = () => {
+    this.setState({ tempUrl: null });
   };
 
   render() {
@@ -249,6 +261,13 @@ export class Feed extends Component {
                   type="text"
                 />
               </div>
+              {this.state.tempUrl !== null ? (
+                <div id="imagePreview">
+                  <AiFillCloseCircle onClick={this.closeImagePreview} />
+                  <img src={this.state.tempUrl} alt="" />
+                </div>
+              ) : null}
+
               <div id="icons">
                 <div>
                   <AiOutlinePicture onClick={this.handleImageInput} />
@@ -476,6 +495,12 @@ export class Feed extends Component {
                     //  placeholder="tweet"
                     id="text"
                   />
+                  {this.state.tempUrl !== null ? (
+                    <div id="imagePreview">
+                      <AiFillCloseCircle onClick={this.closeImagePreview} />
+                      <img src={this.state.tempUrl} alt="" />
+                    </div>
+                  ) : null}
                   <input type="file" onChange={this.imageSelected} />
                 </div>
                 <div id="buttons">
