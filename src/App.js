@@ -89,7 +89,7 @@ class App extends React.Component {
       const connOpt = {
         transports: ["websocket"],
       };
-      this.socket = io("http://localhost:3004", connOpt);
+      this.socket = io("http://localhost:3003", connOpt);
       this.socket.on("connect", () => {
         this.socket.emit("info", {
           username: this.props.user.username,
