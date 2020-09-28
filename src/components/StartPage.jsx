@@ -68,7 +68,7 @@ class StartPage extends React.Component {
     return (
       <Container id="startPage">
         <Row id="main">
-          <Col xs={6} id="leftColumn">
+          <Col xs={12} sm={12} lg={6} id="leftColumn">
             <img
               className="img-fluid"
               src="https://upload.wikimedia.org/wikipedia/de/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"
@@ -101,7 +101,7 @@ class StartPage extends React.Component {
               </div>
             </div>
           </Col>
-          <Col xs={6} id="rightColumn">
+          <Col xs={12} sm={12} lg={6} id="rightColumn">
             <div>
               <div id="content">
                 <img

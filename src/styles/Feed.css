@@ -255,6 +255,12 @@
 #imagePreview svg:hover {
   cursor: pointer;
 }
+@media only screen and (max-width: 998px) {
+  #feed {
+    width: 80vw !important;
+  }
+}
+
 /*
   .tweet .content .icons > p {
     height: 35px;
