@@ -79,3 +79,8 @@
   border: none;
   border-radius: 20px;
 }
+@media only screen and (max-width: 998px) {
+  #lists > div:nth-of-type(2) {
+    width: 80vw !important;
+  }
+}

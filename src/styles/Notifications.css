@@ -32,3 +32,8 @@
   font-size: 24px;
   color: #1da1f2;
 }
+@media only screen and (max-width: 998px) {
+  #bookmarks > div:nth-of-type(2) {
+    width: 80vw !important;
+  }
+}

@@ -216,3 +216,8 @@
   outline: none !important;
   background-color: #f5f8fa !important;
 }
+@media only screen and (max-width: 998px) {
+  #profile #userInfo {
+    width: 80vw !important;
+  }
+}

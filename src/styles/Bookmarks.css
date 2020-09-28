@@ -30,3 +30,8 @@
 #bookmarks #content p:nth-of-type(2) {
   color: #657786;
 }
+@media only screen and (max-width: 998px) {
+  #bookmarks > div:nth-of-type(2) {
+    width: 80vw !important;
+  }
+}
