@@ -55,7 +55,7 @@ export class Login extends Component {
       {
         headers: new Headers({
           "content-type": "application/json",
-          "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+          "Access-Control-Allow-Origin": "https://twitterfe.herokuapp.com",
         }),
         credentials: "include",
         method: "POST",
