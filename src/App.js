@@ -45,8 +45,7 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-const alanKey =
-  "4e61d43e595528115453bb1e217c43372e956eca572e1d8b807a3e2338fdd0dc/stage";
+const alanKey = "";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -59,8 +58,9 @@ class App extends React.Component {
   }
 
   componentDidMount = async () => {
+    console.log(process.env.REACT_APP_ALAN_KEY);
     alanBtn({
-      key: alanKey,
+      key: process.env.REACT_APP_ALAN_KEY,
       onCommand: ({ command, username }) => {
         if (command === "fetchTweets") {
           window.location.href = `/home/${this.props.user.username}`;

@@ -27,7 +27,9 @@ class RightContainer extends Component {
     this.setState({ filteredUsers: "", query: "" });
   };
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3003/profiles`);
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles`
+    );
     let users = await response.json();
 
     this.setState({ users });

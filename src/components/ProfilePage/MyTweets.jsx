@@ -28,9 +28,12 @@ const mapDispatchToProps = (dispatch) => {
 };
 const deleteTweet = (tweet) => {
   return async (dispatch, getState) => {
-    let response = await fetch(`http://localhost:3003/tweets/${tweet._id}`, {
-      method: "DELETE",
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweet._id}`,
+      {
+        method: "DELETE",
+      }
+    );
     if (response.ok) {
       alert("tweet deleted");
       dispatch({

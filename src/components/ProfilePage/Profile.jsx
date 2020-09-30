@@ -112,9 +112,9 @@ export class Profile extends Component {
     console.log(this.state.updateUserInfo);
     let editInfo = {
       method: "PUT",
-      url: await `http://localhost:3003/profiles/me`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/me`,
       headers: {
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.updateUserInfo,
       withCredentials: true,
@@ -125,10 +125,10 @@ export class Profile extends Component {
       console.log("stf");
       let userImage = {
         method: "POST",
-        url: await `http://localhost:3003/profiles/${this.state.userInfo._id}/uploadImage`,
+        url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/${this.state.userInfo._id}/uploadImage`,
         headers: {
           username: this.props.user.username,
-          "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
+          "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
         },
         data: this.state.image,
 
@@ -136,10 +136,13 @@ export class Profile extends Component {
       };
       let userImageResponse = await axios(userImage);
     }
-    let response = await fetch(`http://localhost:3003/profiles/me`, {
-      method: "GET",
-      credentials: "include",
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/me`,
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
     let userInfo = await response.json();
     userInfo.image = this.bufferToBase64(userInfo.image.data);
     if (response.ok) {

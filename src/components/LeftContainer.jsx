@@ -90,10 +90,10 @@ class LeftContainer extends React.Component {
 
     let tweet = {
       method: "POST",
-      url: await `http://localhost:3003/tweets`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.tweet,
       withCredentials: true,
@@ -103,10 +103,10 @@ class LeftContainer extends React.Component {
     console.log(tweetId);
     let tweetImage = {
       method: "POST",
-      url: await `http://localhost:3003/tweets/${tweetId}`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweetId}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.image,
       withCredentials: true,

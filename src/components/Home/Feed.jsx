@@ -48,14 +48,17 @@ const bufferToBase64 = (buf) => {
 };
 const fetchTweets = () => {
   return async (dispatch, getState) => {
-    let response = await fetch("http://localhost:3003/tweets", {
-      method: "GET",
-      credentials: "include",
-      headers: new Headers({
-        "Access-Control-Allow-Credentials": "true",
-        "Content-Type": "application/json",
-      }),
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: new Headers({
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json",
+        }),
+      }
+    );
     let tweets = await response.json();
     tweets.forEach((tweet) => {
       if (tweet.image) {
@@ -78,10 +81,13 @@ const fetchTweets = () => {
 };
 const deleteTweet = (tweet) => {
   return async (dispatch, getState) => {
-    let response = await fetch(`http://localhost:3003/tweets/${tweet._id}`, {
-      method: "DELETE",
-      credentials: "include",
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweet._id}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+      }
+    );
     if (response.ok) {
       dispatch({
         type: "DELETE_TWEET",
@@ -159,9 +165,9 @@ export class Feed extends Component {
     this.setState({ loading: true });
     let tweet = {
       method: "POST",
-      url: await `http://localhost:3003/tweets`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets`,
       headers: {
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.tweet,
       withCredentials: true,
@@ -170,10 +176,10 @@ export class Feed extends Component {
     let tweetId = tweetResponse.data;
     let tweetImage = {
       method: "POST",
-      url: await `http://localhost:3003/tweets/${tweetId}`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweetId}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.image,
     };
@@ -191,9 +197,9 @@ export class Feed extends Component {
     this.setState({ loading: true });
     let editTweet = {
       method: "PUT",
-      url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${this.state.selectedTweet._id}`,
       headers: {
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.newTweet,
       withCredentials: true,
@@ -202,10 +208,10 @@ export class Feed extends Component {
     let tweetResponse = await axios(editTweet);
     let tweetImage = {
       method: "POST",
-      url: await `http://localhost:3003/tweets/${this.state.selectedTweet._id}`,
+      url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${this.state.selectedTweet._id}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3003/",
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
       },
       data: this.state.image,
     };

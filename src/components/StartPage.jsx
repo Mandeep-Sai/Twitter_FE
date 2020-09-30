@@ -47,13 +47,16 @@ class StartPage extends React.Component {
   };
   registerUser = async (e) => {
     e.preventDefault();
-    let response = await fetch("http://localhost:3003/profiles/register", {
-      method: "POST",
-      body: JSON.stringify(this.state.info),
-      headers: new Headers({
-        "content-Type": "application/json",
-      }),
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/register`,
+      {
+        method: "POST",
+        body: JSON.stringify(this.state.info),
+        headers: new Headers({
+          "content-Type": "application/json",
+        }),
+      }
+    );
     if (response.ok) {
       alert("successfully registered, login to the website");
       this.setState({ showRegister: false });

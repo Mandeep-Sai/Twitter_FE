@@ -50,27 +50,35 @@ export class Login extends Component {
   };
 
   loginHandler = async () => {
-    let response = await fetch("http://localhost:3003/profiles/login", {
-      headers: new Headers({
-        "content-type": "application/json",
-      }),
-      credentials: "include",
-      method: "POST",
-      body: JSON.stringify(this.state.user),
-    });
+    let response = await fetch(
+      `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/login`,
+      {
+        headers: new Headers({
+          "content-type": "application/json",
+        }),
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify(this.state.user),
+      }
+    );
     if (response.ok) {
       //
-      let userInfo = await fetch(`http://localhost:3003/profiles/me`, {
-        method: "GET",
-        credentials: "include",
-      });
+      let userInfo = await fetch(
+        `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/me`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       let user = await userInfo.json();
       user.image = this.bufferToBase64(user.image.data);
       if (response.ok) {
         this.setState({ user });
         this.props.getUser(this.state.user);
       }
-      let usersResponse = await fetch(`http://localhost:3003/profiles`);
+      let usersResponse = await fetch(
+        `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles`
+      );
       let users = await usersResponse.json();
       users.forEach((user) => {
         user.image = this.bufferToBase64(user.image.data);
