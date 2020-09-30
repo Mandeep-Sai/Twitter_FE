@@ -58,6 +58,7 @@ export class Login extends Component {
           "Access-Control-Allow-Origin": "https://twitterfe.herokuapp.com",
         }),
         credentials: "include",
+        mode: "no-cors",
         method: "POST",
         body: JSON.stringify(this.state.user),
       }
