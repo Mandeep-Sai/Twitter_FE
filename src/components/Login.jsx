@@ -54,7 +54,7 @@ export class Login extends Component {
       `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/login`,
       {
         headers: new Headers({
-          "Access-Control-Allow-Origin": "https://twitterfe.herokuapp.com",
+          "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
           "content-type": "application/json",
         }),
         credentials: "include",

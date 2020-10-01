@@ -93,7 +93,7 @@ class LeftContainer extends React.Component {
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.tweet,
       withCredentials: true,
@@ -106,7 +106,7 @@ class LeftContainer extends React.Component {
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweetId}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.image,
       withCredentials: true,

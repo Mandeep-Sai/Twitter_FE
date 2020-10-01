@@ -114,7 +114,7 @@ export class Profile extends Component {
       method: "PUT",
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/me`,
       headers: {
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.updateUserInfo,
       withCredentials: true,
@@ -128,7 +128,7 @@ export class Profile extends Component {
         url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/${this.state.userInfo._id}/uploadImage`,
         headers: {
           username: this.props.user.username,
-          "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+          "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
         },
         data: this.state.image,
 

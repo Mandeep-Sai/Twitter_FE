@@ -167,7 +167,7 @@ export class Feed extends Component {
       method: "POST",
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets`,
       headers: {
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.tweet,
       withCredentials: true,
@@ -179,7 +179,7 @@ export class Feed extends Component {
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${tweetId}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.image,
     };
@@ -199,7 +199,7 @@ export class Feed extends Component {
       method: "PUT",
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${this.state.selectedTweet._id}`,
       headers: {
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.newTweet,
       withCredentials: true,
@@ -211,7 +211,7 @@ export class Feed extends Component {
       url: await `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/${this.state.selectedTweet._id}`,
       headers: {
         username: this.props.user.username,
-        "Access-Control-Allow-Origin": `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
       },
       data: this.state.image,
     };

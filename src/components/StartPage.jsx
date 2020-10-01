@@ -54,6 +54,7 @@ class StartPage extends React.Component {
         body: JSON.stringify(this.state.info),
         headers: new Headers({
           "content-Type": "application/json",
+          "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
         }),
       }
     );
