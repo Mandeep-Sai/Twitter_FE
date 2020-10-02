@@ -13,6 +13,7 @@ import {
 import { BsCardText, BsThreeDots } from "react-icons/bs";
 import { RiQuillPenLine } from "react-icons/ri";
 import { FiBarChart } from "react-icons/fi";
+import { GiArtificialIntelligence } from "react-icons/gi";
 import { FaRegSmile } from "react-icons/fa";
 import { GoCalendar } from "react-icons/go";
 import { Link, withRouter } from "react-router-dom";
@@ -143,6 +144,7 @@ class LeftContainer extends React.Component {
         </div>
         <div
           className={this.props.active === "notifications" ? "active" : null}
+          id="notifications"
         >
           <Link to={`/notifications`}>
             <FiBell />
@@ -174,8 +176,17 @@ class LeftContainer extends React.Component {
             <AiOutlineUser />
           </Link>
         </div>
-        <div>
-          <BsThreeDots />
+        <div
+          className={this.props.active === "voiceCommands" ? "active" : null}
+          id="alan"
+        >
+          <Link to={`/voiceCommands`}>
+            <GiArtificialIntelligence />
+
+            <Badge id="newBadge" pill variant="danger">
+              NEW
+            </Badge>
+          </Link>
         </div>
         <div onClick={() => this.setState({ showCreateTweet: true })}>
           <RiQuillPenLine />

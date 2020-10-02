@@ -145,9 +145,15 @@
 #logoutModal > p:hover {
   cursor: pointer;
 }
-.badge-pill {
+#notifications .badge-pill {
   border-radius: 30px !important;
   position: absolute;
   right: 10px;
   background-color: #1da1f2;
+}
+#alan .badge-pill {
+  border-radius: 30px !important;
+  position: absolute;
+  font-size: 9px !important;
+  right: 0px !important;
 }
