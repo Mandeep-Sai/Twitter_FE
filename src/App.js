@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import InProgress from "./components/InProgress";
 import io from "socket.io-client";
 import Notifications from "./components/Notifications";
+import Alan from "./components/Alan";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -197,6 +198,7 @@ class App extends React.Component {
         <Route path="/hashtags" exact component={InProgress} />
         <Route path="/notifications" exact component={Notifications} />
         <Route path="/messages" exact component={InProgress} />
+        <Route path="/voiceCommands" exact component={Alan} />
 
         <Toast
           style={{ position: "absolute", top: "20px", right: "20px" }}
