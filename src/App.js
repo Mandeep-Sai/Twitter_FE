@@ -42,6 +42,10 @@ const mapDispatchToProps = (dispatch) => {
         type: "ADD_NOTIFICATION",
         payload: notification,
       }),
+    resetNotifications: () =>
+      dispatch({
+        type: "RESET_NOTIFICATIONS",
+      }),
   };
 };
 
@@ -58,18 +62,23 @@ class App extends React.Component {
   }
 
   componentDidMount = async () => {
-    console.log(process.env.REACT_APP_ALAN_KEY);
     alanBtn({
       key: process.env.REACT_APP_ALAN_KEY,
       onCommand: ({ command, username }) => {
         if (command === "fetchTweets") {
-          window.location.href = `/home/${this.props.user.username}`;
+          window.location.href = `/home/me`;
         }
         if (command === "logout") {
           window.location.href = "/";
         }
         if (command === "profilePage") {
-          window.location.href = `/userinfo/${this.props.user.username}`;
+          window.location.href = `/userinfo/me`;
+        }
+        if (command === "notifications") {
+          window.location.href = "/notifications";
+        }
+        if (command === "clearNotifications") {
+          this.props.resetNotifications();
         }
         if (command === "fetchUser") {
           username = username.split(" ").join("");
@@ -89,7 +98,10 @@ class App extends React.Component {
       const connOpt = {
         transports: ["websocket"],
       };
-      this.socket = io("http://localhost:3003", connOpt);
+      this.socket = io(
+        `${process.env.REACT_APP_BACKEND_CONNECTION_URL}`,
+        connOpt
+      );
       this.socket.on("connect", () => {
         this.socket.emit("info", {
           username: this.props.user.username,

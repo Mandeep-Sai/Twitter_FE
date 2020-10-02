@@ -1,5 +1,5 @@
 #feed {
-  width: 50vw;
+  width: 55vw;
 }
 #createTweet {
   margin-top: 10px;
@@ -197,27 +197,7 @@
   padding: 15px;
 }
 #editTweet #buttons button:first-of-type,
-#editTweet #buttons button:nth-of-type(2) {
-  margin: 0px 10px;
-  width: 90px;
-  height: 40px;
-  margin-left: auto;
-  color: white;
-  background-color: #1da1f2;
-  border: none;
-  border-radius: 20px;
-}
-#editTweet #buttons button:first-of-type:focus,
-#editTweet #buttons button:nth-of-type(2):focus {
-  outline: none;
-}
-#deleteTweet #heading {
-  text-align: center !important;
-}
-#deleteTweet #buttons {
-  padding: 15px;
-  margin-left: 25% !important;
-}
+#editTweet #buttons button:nth-of-type(2),
 #deleteTweet #buttons button:first-of-type,
 #deleteTweet #buttons button:nth-of-type(2) {
   margin: 0px 10px;
@@ -229,9 +209,18 @@
   border: none;
   border-radius: 20px;
 }
+#editTweet #buttons button:first-of-type:focus,
+#editTweet #buttons button:nth-of-type(2):focus,
 #deleteTweet #buttons button:first-of-type:focus,
 #deleteTweet #buttons button:nth-of-type(2):focus {
   outline: none;
+}
+#deleteTweet #heading {
+  text-align: center !important;
+}
+#deleteTweet #buttons {
+  padding: 15px;
+  margin-left: 25% !important;
 }
 .spinner-border {
   position: absolute;
