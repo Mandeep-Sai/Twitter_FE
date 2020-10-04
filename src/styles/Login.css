@@ -64,3 +64,7 @@
   text-decoration: none;
   color: #1da1f2;
 }
+#login .spinner-border {
+  margin-top: 30px !important;
+  color: white !important;
+}

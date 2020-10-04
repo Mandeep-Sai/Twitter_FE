@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner } from "react-bootstrap";
 import "../styles/Login.css";
 import { connect } from "react-redux";
 
@@ -32,6 +32,7 @@ export class Login extends Component {
         username: "",
         password: "",
       },
+      loading: false,
     };
   }
   userHandler = (e) => {
@@ -50,6 +51,7 @@ export class Login extends Component {
   };
 
   loginHandler = async () => {
+    this.setState({ loading: true });
     let response = await fetch(
       `${process.env.REACT_APP_BACKEND_CONNECTION_URL}/profiles/login`,
       {
@@ -110,7 +112,13 @@ export class Login extends Component {
             <p>Password</p>
             <input onChange={this.userHandler} id="password" type="password" />
           </div>
-          <button onClick={this.loginHandler}>Log in</button>
+          <button onClick={this.loginHandler}>
+            {this.state.loading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              <p style={{ margin: "0px" }}>Log in</p>
+            )}
+          </button>
           <div id="bottomContent">
             <a href="/">Forgot password ?</a>
             <a href="/" style={{ margin: "0 5px" }}>
