@@ -169,7 +169,7 @@ export class Profile extends Component {
           ) : (
             <Container id="userInfo">
               <div id="navBar">
-                <div>
+                <div onClick={() => this.props.history.goBack()}>
                   <BsArrowLeft />
                 </div>
                 <div id="name">
@@ -236,7 +236,7 @@ export class Profile extends Component {
                   onClick={() => this.setState({ active: "replies" })}
                   className={this.state.active === "replies" ? "active" : null}
                 >
-                  Tweets & replies
+                  Replies
                 </div>
                 <div
                   onClick={() => this.setState({ active: "media" })}

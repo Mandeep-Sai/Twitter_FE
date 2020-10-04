@@ -221,3 +221,6 @@
     width: 80vw !important;
   }
 }
+#profile #navBar > div:first-of-type > svg:hover {
+  cursor: pointer;
+}

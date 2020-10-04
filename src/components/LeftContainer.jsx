@@ -284,7 +284,7 @@ class LeftContainer extends React.Component {
             <div id="logoutModal">
               <div id="heading">
                 <img
-                  src="https://stickershop.line-scdn.net/stickershop/v1/product/718/LINEStorePC/main.png;compress=true"
+                  src={`data:image/jpeg;base64,${this.props.user.image}`}
                   alt=""
                 />
                 <div>
