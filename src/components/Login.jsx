@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Container, Spinner, Alert } from "react-bootstrap";
 import "../styles/Login.css";
 import { connect } from "react-redux";
 
@@ -33,6 +33,7 @@ export class Login extends Component {
         password: "",
       },
       loading: false,
+      showAlert: false,
     };
   }
   userHandler = (e) => {
@@ -87,12 +88,8 @@ export class Login extends Component {
         user.image = this.bufferToBase64(user.image.data);
       });
       this.props.getUsers(users);
-      //
-      setTimeout(() => {
-        this.props.history.push(`/home/me`);
-      }, 1000);
     } else {
-      alert("Error");
+      this.setState({ showAlert: true, loading: false });
     }
   };
   render() {
@@ -104,6 +101,10 @@ export class Login extends Component {
             alt="logo"
           />
           <p>Log in to Twitter</p>
+          {this.state.showAlert ? (
+            <Alert variant="danger">Username or Password is incorrect</Alert>
+          ) : null}
+
           <div id="user">
             <p>Phone,email or username</p>
             <input onChange={this.userHandler} id="username" type="text" />
@@ -112,7 +113,7 @@ export class Login extends Component {
             <p>Password</p>
             <input onChange={this.userHandler} id="password" type="password" />
           </div>
-          <button onClick={this.loginHandler}>
+          <button onClick={this.loginHandler} style={{ position: "relative" }}>
             {this.state.loading ? (
               <Spinner animation="border" variant="primary" />
             ) : (
