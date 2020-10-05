@@ -88,6 +88,9 @@ export class Login extends Component {
         user.image = this.bufferToBase64(user.image.data);
       });
       this.props.getUsers(users);
+      setTimeout(() => {
+        this.props.history.push(`/home/me`);
+      }, 1000);
     } else {
       this.setState({ showAlert: true, loading: false });
     }
