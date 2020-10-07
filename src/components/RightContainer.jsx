@@ -3,6 +3,7 @@ import { FiSearch, FiSettings } from "react-icons/fi";
 import "../styles/RightContainer.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const mapStateToProps = (state) => state;
 
@@ -14,6 +15,7 @@ class RightContainer extends Component {
       query: "",
       users: "",
       filteredUsers: "",
+      darkMode: false,
     };
   }
   updateQuery = (e) => {
@@ -34,10 +36,33 @@ class RightContainer extends Component {
 
     this.setState({ users });
   };
+  handleSwitchChange = () => {
+    this.setState({ darkMode: !this.state.darkMode });
+  };
   render() {
     return (
       <>
-        <div id="rightBar">
+        <div id={this.state.darkMode ? "rightBar-dark" : "rightBar"}>
+          <div id="nightModeSwitch">
+            <p>Night Mode is here!!</p>
+            <div>
+              <FaSun />
+              <div className="custom-control custom-switch">
+                <input
+                  type="checkbox"
+                  className="custom-control-input"
+                  id="customSwitchesChecked"
+                  onChange={this.handleSwitchChange}
+                />
+                <label
+                  className="custom-control-label"
+                  htmlFor="customSwitchesChecked"
+                ></label>
+              </div>
+              <FaMoon />
+            </div>
+          </div>
+
           <div id="search">
             <FiSearch />
             <input
