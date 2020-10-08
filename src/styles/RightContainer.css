@@ -173,6 +173,7 @@
 #rightBar-dark {
   width: 28vw;
   min-height: 80vh;
+  background-color: black;
 }
 #rightBar-dark #search {
   margin-top: 10px;
@@ -180,7 +181,7 @@
   width: 100%;
   position: relative;
   border-radius: 40px;
-  background-color: black;
+  background-color: rgb(34, 33, 33);
 }
 #rightBar-dark #search svg {
   font-size: 28px;
@@ -204,7 +205,7 @@
   width: 100%;
 
   border-radius: 20px;
-  background-color: black;
+  background-color: rgb(34, 33, 33);
   color: white;
 }
 #rightBar-dark #trending #header {
@@ -281,10 +282,10 @@
 #rightBar-dark #trending #follow button {
   width: 90px;
   height: 40px;
-  color: #1da1f2;
+  color: black;
   font-weight: 650;
-  background-color: #f5f8fa;
-  border: 2px solid #1da1f2;
+  background-color: #1da1f2;
+  border: 2px solid white;
   border-radius: 20px;
   margin: auto 0px;
 }
@@ -303,7 +304,7 @@
   margin-top: 2px;
   position: absolute;
   width: 28vw;
-  background-color: black;
+  background-color: rgb(34, 33, 33);
   border-radius: 5px;
   padding: 10px;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.75);
@@ -325,6 +326,7 @@
   font-size: 14px;
   margin-left: 10px;
   margin-top: 10px;
+  color: white;
 }
 #rightBar-dark #nightModeSwitch > div {
   margin-top: 8px;
@@ -337,6 +339,7 @@
 #rightBar-dark #nightModeSwitch svg {
   margin-top: 4px;
   margin-right: 5px;
+  color: white;
 }
 @media only screen and (max-width: 998px) {
   #rightBar-dark {

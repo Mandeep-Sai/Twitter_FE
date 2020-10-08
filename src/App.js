@@ -15,6 +15,9 @@ import InProgress from "./components/InProgress";
 import io from "socket.io-client";
 import Notifications from "./components/Notifications";
 import Alan from "./components/Alan";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyles } from "./components/globalStyles";
+import { lightTheme, darkTheme } from "./components/Themes";
 
 const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
@@ -177,45 +180,48 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Route path="/" exact component={StartPage} />
-        <Route path="/login" exact component={Login} />
-        <Route
-          path="/home/me"
-          exact
-          render={(props) => (
-            <Home
-              {...props}
-              likeFunc={this.sendLike}
-              updateLikesFunc={this.updateLikesForAll}
-              updateDislikesFunc={this.updateDislikesForAll}
-            />
-          )}
-        />
-        <Route path="/userinfo/:username" exact component={Profile} />
-        <Route path="/:username/lists" exact component={Lists} />
-        <Route path="/:username/bookmarks" exact component={Bookmarks} />
-        <Route path="/hashtags" exact component={InProgress} />
-        <Route path="/notifications" exact component={Notifications} />
-        <Route path="/messages" exact component={InProgress} />
-        <Route path="/voiceCommands" exact component={Alan} />
+      <ThemeProvider theme={this.props.darkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
+        <Router>
+          <Route path="/" exact component={StartPage} />
+          <Route path="/login" exact component={Login} />
+          <Route
+            path="/home/me"
+            exact
+            render={(props) => (
+              <Home
+                {...props}
+                likeFunc={this.sendLike}
+                updateLikesFunc={this.updateLikesForAll}
+                updateDislikesFunc={this.updateDislikesForAll}
+              />
+            )}
+          />
+          <Route path="/userinfo/:username" exact component={Profile} />
+          <Route path="/:username/lists" exact component={Lists} />
+          <Route path="/:username/bookmarks" exact component={Bookmarks} />
+          <Route path="/hashtags" exact component={InProgress} />
+          <Route path="/notifications" exact component={Notifications} />
+          <Route path="/messages" exact component={InProgress} />
+          <Route path="/voiceCommands" exact component={Alan} />
 
-        <Toast
-          style={{ position: "absolute", top: "20px", right: "20px" }}
-          onClose={() => this.setState({ showLikeToaster: false })}
-          show={this.state.showLikeToaster}
-          delay={3000}
-          autohide
-        >
-          <Toast.Header>
-            <strong className="mr-auto">Notification</strong>
-          </Toast.Header>
-          <Toast.Body>
-            {this.state.likedBy} liked your recent tweet{" "}
-            <strong>{this.state.tweet}</strong>
-          </Toast.Body>
-        </Toast>
-      </Router>
+          <Toast
+            style={{ position: "absolute", top: "20px", right: "20px" }}
+            onClose={() => this.setState({ showLikeToaster: false })}
+            show={this.state.showLikeToaster}
+            delay={3000}
+            autohide
+          >
+            <Toast.Header>
+              <strong className="mr-auto">Notification</strong>
+            </Toast.Header>
+            <Toast.Body>
+              {this.state.likedBy} liked your recent tweet{" "}
+              <strong>{this.state.tweet}</strong>
+            </Toast.Body>
+          </Toast>
+        </Router>
+      </ThemeProvider>
     );
   }
 }

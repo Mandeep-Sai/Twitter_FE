@@ -14,6 +14,7 @@ const initialState = {
   notifications: 0,
   notificationsArrray: [],
   likedTweets: [],
+  darkMode: false,
 };
 const persistConfig = {
   key: "root",

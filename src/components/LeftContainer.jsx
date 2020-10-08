@@ -125,7 +125,7 @@ class LeftContainer extends React.Component {
   };
   render() {
     return (
-      <div id="leftBar">
+      <div id={this.props.darkMode ? "leftBar" : "leftBar"}>
         <div id="logo">
           <img
             src="https://upload.wikimedia.org/wikipedia/de/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png"

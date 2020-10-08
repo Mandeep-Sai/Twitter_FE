@@ -7,6 +7,16 @@ import { FaMoon, FaSun } from "react-icons/fa";
 
 const mapStateToProps = (state) => state;
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setDarkmode: () => {
+      dispatch({
+        type: "SET_DARKMODE",
+      });
+    },
+  };
+};
+
 class RightContainer extends Component {
   constructor(props) {
     super(props);
@@ -37,12 +47,13 @@ class RightContainer extends Component {
     this.setState({ users });
   };
   handleSwitchChange = () => {
+    this.props.setDarkmode();
     this.setState({ darkMode: !this.state.darkMode });
   };
   render() {
     return (
       <>
-        <div id={this.state.darkMode ? "rightBar-dark" : "rightBar"}>
+        <div id={this.state.darkMode ? "rightBar" : "rightBar"}>
           <div id="nightModeSwitch">
             <p>Night Mode is here!!</p>
             <div>
@@ -175,4 +186,4 @@ class RightContainer extends Component {
   }
 }
 
-export default connect(mapStateToProps)(RightContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(RightContainer);

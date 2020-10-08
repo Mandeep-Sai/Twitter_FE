@@ -46,7 +46,7 @@ export class Home extends Component {
 
   render() {
     return (
-      <Container id="home">
+      <Container id={this.props.darkMode ? "home" : "home"}>
         <div>
           <LeftContainer active="home" />
         </div>

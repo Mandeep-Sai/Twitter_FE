@@ -119,6 +119,11 @@ export default function (state = {}, action) {
       };
     case "LOGOUT":
       return undefined;
+    case "SET_DARKMODE":
+      return {
+        ...state,
+        darkMode: !state.darkMode,
+      };
     default:
       return state;
   }
