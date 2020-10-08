@@ -259,7 +259,7 @@ export class Feed extends Component {
                   src={`data:image/jpeg;base64,${this.props.user.image}`}
                   alt=""
                 />
-                <input
+                <textarea
                   id="text"
                   onChange={this.tweetHandler}
                   placeholder="What's happening?"
