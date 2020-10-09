@@ -3,7 +3,7 @@
   height: 35px;
 }
 #login > div {
-  width: 600px;
+  width: 55vw;
   height: 50vh;
   margin: 20px auto;
 }
@@ -68,4 +68,9 @@
   position: absolute !important;
   margin-top: -10px !important;
   color: white !important;
+}
+@media (max-width: 900px) {
+  #login > div {
+    width: 80vw;
+  }
 }
