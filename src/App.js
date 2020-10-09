@@ -129,7 +129,7 @@ class App extends React.Component {
         }
       );
       this.socket.on("increaseLikes", async ({ tweetId }) => {
-        let response = await fetch("http://localhost:3003/tweets/addLike", {
+        let response = await fetch(`${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/addLike`, {
           method: "POST",
           credentials: "include",
           body: JSON.stringify({ tweetId }),
@@ -142,7 +142,7 @@ class App extends React.Component {
         }
       });
       this.socket.on("decreaseLikes", async ({ tweetId }) => {
-        let response = await fetch("http://localhost:3003/tweets/removeLike", {
+        let response = await fetch(`${process.env.REACT_APP_BACKEND_CONNECTION_URL}/tweets/removeLike`, {
           method: "POST",
           credentials: "include",
           body: JSON.stringify({ tweetId }),
