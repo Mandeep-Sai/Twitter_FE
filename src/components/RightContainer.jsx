@@ -64,6 +64,7 @@ class RightContainer extends Component {
                   className="custom-control-input"
                   id="customSwitchesChecked"
                   onChange={this.handleSwitchChange}
+                  checked={this.props.darkMode ? true : false}
                 />
                 <label
                   className="custom-control-label"
