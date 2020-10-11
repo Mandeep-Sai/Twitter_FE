@@ -60,7 +60,7 @@ class Notifications extends Component {
                   textAlign: "center",
                   width: "300px",
                   margin: "auto",
-                  backgroundColor: "white",
+                  backgroundColor: `${this.props.darkMode ? "black":"white"}`,
                   fontSize: "30px",
                 }}
               >

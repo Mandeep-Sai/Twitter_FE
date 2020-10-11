@@ -46,7 +46,7 @@ export const GlobalStyles = createGlobalStyle`
   color: ${({ theme }) => theme.text}
 }
 #leftBar > div:hover{
-  background-color:rgb(145, 145, 145)
+  background-color:${({ theme})=>theme.hover} ;
 }
 #leftBar div:nth-of-type(10){
   color: ${({ theme }) => theme.body}
@@ -61,6 +61,9 @@ export const GlobalStyles = createGlobalStyle`
 #createTweet #icons button{
   background-color: ${({ theme }) => theme.twitterColor};
   color: ${({ theme }) => theme.text};
+}
+.tweet,#createTweet{
+  border:1px solid ${({ theme }) => theme.border};
 }
 
 .tweet .content .icons, .tweet .content .name > div svg{
@@ -108,5 +111,24 @@ export const GlobalStyles = createGlobalStyle`
 }
 #imagePreview svg{
   color: ${({ theme }) => theme.twitterColor}
+}
+#notifications #content{
+  color: ${({ theme }) => theme.text}
+}
+#alanCommands{
+  border:1px solid ${({ theme})=>theme.border}
+}
+#alanCommands .commands p{
+  background-color: ${({ theme }) => theme.divBackground}
+}
+#profile #image button{
+  background-color: ${({ theme }) => theme.twitterColor};
+  color: ${({ theme }) => theme.text};
+}
+#profile #info > p:first-of-type{
+  color: ${({ theme }) => theme.text};
+}
+#profile #info > p:nth-of-type(2),#profile #info #dates,#profile #info #followers,#profile #myTweets > div{
+  color: ${({ theme }) => theme.lightText};
 }
   `;
