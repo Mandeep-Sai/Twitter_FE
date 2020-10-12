@@ -75,25 +75,25 @@ class RightContainer extends Component {
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
             <div id="trendingHastag">
               <p>Trending in Germany</p>
-              <p>#BEERisEverything</p>
-              <p>1.5M Tweets</p>
+              <p>#MERN_stack</p>
+              <p>0.5M Tweets</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
             <div id="trendingHastag">
               <p>Trending in Germany</p>
-              <p>#BEERisEverything</p>
-              <p>1.5M Tweets</p>
+              <p>#Hire Mandeep</p>
+              <p>10.5M Tweets</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
             <div id="trendingHastag">
               <p>Trending in Germany</p>
-              <p>#BEERisEverything</p>
-              <p>1.5M Tweets</p>
+              <p>#MandeepIsTheBest</p>
+              <p>9.5M Tweets</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
             <div id="trendingHastag">
               <p>Trending in Germany</p>
-              <p>#BEERisEverything</p>
+              <p>#ILoveJS</p>
               <p>1.5M Tweets</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />

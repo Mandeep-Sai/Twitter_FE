@@ -177,7 +177,9 @@ export class Profile extends Component {
                   <p>tweets length</p>
                 </div>
               </div>
-              <div id="bgImage"></div>
+              <div id="bgImage">
+                <img src="https://i.morioh.com/67feeaf72f.png" alt=""/>
+              </div>
               <div id="image">
                 <img
                   src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
