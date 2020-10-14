@@ -132,7 +132,7 @@ export class Feed extends Component {
     this.props.getTweets();
     setTimeout(() => {
       this.setState({ loading: false });
-    }, 500);
+    }, 1500);
   };
   // image
   handleImageInput = (e) => {
