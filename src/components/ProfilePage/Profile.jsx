@@ -178,7 +178,7 @@ export class Profile extends Component {
                 </div>
               </div>
               <div id="bgImage">
-                <img src="https://i.morioh.com/67feeaf72f.png" alt=""/>
+                <img src="https://png.pngtree.com/thumb_back/fh260/background/20200604/pngtree-abstract-polygonal-space-low-poly-dark-background-with-connecting-dots-and-image_337931.jpg" alt=""/>
               </div>
               <div id="image">
                 <img

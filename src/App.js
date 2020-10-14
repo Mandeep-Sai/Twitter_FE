@@ -85,7 +85,7 @@ class App extends React.Component {
           username = username.split(" ").join("");
           console.log(username);
           let filteredUser = this.props.users.filter((user) =>
-            user.username.toLowerCase().includes(username)
+            user.username.toLowerCase().includes(username.toLowerCase())
           );
           //  this.setState({ filteredUser });
           this.props.searchUser(filteredUser[0].username);
