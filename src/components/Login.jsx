@@ -125,10 +125,7 @@ export class Login extends Component {
           </button>
           <div id="bottomContent">
             <a href="/">Forgot password ?</a>
-            <a href="/" style={{ margin: "0 5px" }}>
-              {" "}
-              .{" "}
-            </a>
+            
             <a href="/"> Sign up for Twitter</a>
           </div>
         </div>
