@@ -107,7 +107,7 @@ class RightContainer extends Component {
               <p>Who to follow</p>
             </div>
             <hr style={{ margin: "0px", marginTop: "0.4rem " }} />
-            {this.props.users.map((user) => {
+            {this.props.users.slice(0,5).map((user) => {
               if (user.username !== this.props.user.username) {
                 return (
                   <>
