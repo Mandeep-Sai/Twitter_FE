@@ -68,8 +68,8 @@ class StartPage extends React.Component {
 
     console.log(this.state.info);
   };
-  componentDidMount() {
-    const fetchData =async()=>{
+  componentDidMount = async()=> {
+   
 
       let response = await fetch("https://staging.viot.portal.graphicx.io/api/v1/oauth/token/",{
         method:"POST",
@@ -81,7 +81,7 @@ class StartPage extends React.Component {
           "Content-type":"application/x-www-form-urlencoded"
         })
       })
-    }
+
   }
   render() {
     return (
