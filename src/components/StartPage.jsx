@@ -68,6 +68,21 @@ class StartPage extends React.Component {
 
     console.log(this.state.info);
   };
+  componentDidMount() {
+    const fetchData =async()=>{
+
+      let response = await fetch("https://staging.viot.portal.graphicx.io/api/v1/oauth/token/",{
+        method:"POST",
+        body: JSON.stringify({username:"user",password:"123",grant_type:"password"}),
+        headers:new Headers({
+          "Access-Control-Allow-Origin": `${process.env.REACT_APP_ACCESS_CONTROL_URL}`,
+          "Authorization":"Basic cF92b2RfcG9ydGFsX2NsaWVudDpkM2tYam9ZWE1FM0xJa3ZkdVNqVmJ3eEN6ckh4dV8=",
+          "X-TenantID":"p_vod",
+          "Content-type":"application/x-www-form-urlencoded"
+        })
+      })
+    }
+  }
   render() {
     return (
       <Container id="startPage">
